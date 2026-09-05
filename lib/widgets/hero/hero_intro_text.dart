@@ -35,9 +35,9 @@ class HeroIntroText extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.cyan.withValues(alpha: 0.08),
+              color: AppColors.blue.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3)),
+              border: Border.all(color: AppColors.blue.withValues(alpha: 0.2)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -48,9 +48,6 @@ class HeroIntroText extends StatelessWidget {
                   decoration: const BoxDecoration(
                     color: AppColors.emerald,
                     shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(color: AppColors.emerald, blurRadius: 6, spreadRadius: 1),
-                    ],
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -59,7 +56,7 @@ class HeroIntroText extends StatelessWidget {
                   style: AppTypography.codeFont(
                     color: AppColors.textPrimary,
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -78,8 +75,8 @@ class HeroIntroText extends StatelessWidget {
               Text(
                 "Hi, I'm Dnyaneshwar",
                 style: AppTypography.bodyLarge.copyWith(
-                  color: AppColors.cyan,
-                  fontWeight: FontWeight.w600,
+                  color: AppColors.blue,
+                  fontWeight: FontWeight.w700,
                   fontSize: 18,
                 ),
               ),

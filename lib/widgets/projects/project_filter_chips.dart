@@ -32,17 +32,26 @@ class ProjectFilterChips extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.cyan.withValues(alpha: 0.18) : AppColors.surfaceElevated.withValues(alpha: 0.4),
+                  color: isSelected ? AppColors.primaryIndigo.withValues(alpha: 0.1) : Colors.white.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: isSelected ? AppColors.cyan : AppColors.surfaceGlassBorder,
+                    color: isSelected ? AppColors.primaryIndigo : AppColors.slate200,
                   ),
+                  boxShadow: isSelected
+                      ? [
+                          BoxShadow(
+                            color: AppColors.primaryIndigo.withValues(alpha: 0.12),
+                            blurRadius: 8,
+                            spreadRadius: 1,
+                          ),
+                        ]
+                      : null,
                 ),
                 child: Text(
                   cat,
                   style: AppTypography.button.copyWith(
                     fontSize: 13,
-                    color: isSelected ? AppColors.cyan : AppColors.textSecondary,
+                    color: isSelected ? AppColors.primaryIndigo : AppColors.textSecondary,
                     fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),

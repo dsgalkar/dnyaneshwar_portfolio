@@ -38,7 +38,7 @@ class _GlowButtonState extends State<GlowButton> {
 
   @override
   Widget build(BuildContext context) {
-    final Color accent = widget.glowColor ?? AppColors.cyan;
+    final Color accent = widget.glowColor ?? AppColors.blue;
 
     Color bgColor;
     Color textColor;
@@ -47,20 +47,35 @@ class _GlowButtonState extends State<GlowButton> {
 
     switch (widget.variant) {
       case GlowButtonVariant.primary:
-        bgColor = _isHovered ? accent : accent.withValues(alpha: 0.9);
-        textColor = Colors.black;
+        bgColor = _isHovered ? accent.withValues(alpha: 0.9) : accent;
+        textColor = Colors.white;
         shadows = [
           BoxShadow(
-            color: accent.withValues(alpha: _isHovered ? 0.6 : 0.25),
-            blurRadius: _isHovered ? 24 : 14,
-            spreadRadius: _isHovered ? 2 : 0,
+            color: accent.withValues(alpha: _isHovered ? 0.40 : 0.22),
+            blurRadius: _isHovered ? 20 : 12,
+            spreadRadius: _isHovered ? 1 : 0,
             offset: const Offset(0, 4),
           ),
         ];
         break;
       case GlowButtonVariant.secondary:
-        bgColor = _isHovered ? AppColors.surfaceElevated : AppColors.surfaceGlass;
+        bgColor = _isHovered ? Colors.white : const Color(0xFFF1F5F9);
         textColor = AppColors.textPrimary;
+        border = Border.all(
+          color: _isHovered ? accent.withValues(alpha: 0.5) : AppColors.surfaceGlassBorder,
+          width: 1.2,
+        );
+        shadows = [
+          BoxShadow(
+            color: const Color(0xFF0F172A).withValues(alpha: _isHovered ? 0.08 : 0.03),
+            blurRadius: _isHovered ? 14 : 8,
+            offset: const Offset(0, 4),
+          ),
+        ];
+        break;
+      case GlowButtonVariant.outline:
+        bgColor = _isHovered ? accent.withValues(alpha: 0.06) : Colors.transparent;
+        textColor = _isHovered ? accent : AppColors.textPrimary;
         border = Border.all(
           color: _isHovered ? accent : AppColors.surfaceGlassBorder,
           width: 1.2,
@@ -68,26 +83,9 @@ class _GlowButtonState extends State<GlowButton> {
         shadows = _isHovered
             ? [
                 BoxShadow(
-                  color: accent.withValues(alpha: 0.3),
-                  blurRadius: 18,
-                  spreadRadius: 1,
-                )
-              ]
-            : [];
-        break;
-      case GlowButtonVariant.outline:
-        bgColor = Colors.transparent;
-        textColor = _isHovered ? accent : AppColors.textPrimary;
-        border = Border.all(
-          color: _isHovered ? accent : AppColors.textSecondary.withValues(alpha: 0.4),
-          width: 1.2,
-        );
-        shadows = _isHovered
-            ? [
-                BoxShadow(
-                  color: accent.withValues(alpha: 0.35),
-                  blurRadius: 16,
-                  spreadRadius: 1,
+                  color: accent.withValues(alpha: 0.15),
+                  blurRadius: 12,
+                  offset: const Offset(0, 2),
                 )
               ]
             : [];

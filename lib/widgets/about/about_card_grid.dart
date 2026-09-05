@@ -26,7 +26,7 @@ class AboutCardGrid extends StatelessWidget {
     final List<Widget> cards = [
       // Card 1: Core Bio & Background
       TiltCard(
-        glowColor: AppColors.cyan,
+        glowColor: AppColors.primaryIndigo,
         child: GlassContainer(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -37,10 +37,10 @@ class AboutCardGrid extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.cyan.withValues(alpha: 0.12),
+                      color: AppColors.primaryIndigo.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.person_pin_circle_outlined, color: AppColors.cyan, size: 24),
+                    child: const Icon(Icons.person_pin_circle_outlined, color: AppColors.primaryIndigo, size: 24),
                   ),
                   const SizedBox(width: 14),
                   Text('Background & Persona', style: AppTypography.cardTitle),
@@ -63,7 +63,7 @@ class AboutCardGrid extends StatelessWidget {
 
       // Card 2: Education & Academic Base
       TiltCard(
-        glowColor: AppColors.blue,
+        glowColor: AppColors.secondarySky,
         child: GlassContainer(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -74,10 +74,10 @@ class AboutCardGrid extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.blue.withValues(alpha: 0.12),
+                      color: AppColors.secondarySky.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.school_outlined, color: AppColors.blue, size: 24),
+                    child: const Icon(Icons.school_outlined, color: AppColors.secondarySky, size: 24),
                   ),
                   const SizedBox(width: 14),
                   Text('Formal Education', style: AppTypography.cardTitle),
@@ -91,22 +91,22 @@ class AboutCardGrid extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 PortfolioData.educationCollege,
-                style: AppTypography.bodyMedium.copyWith(color: AppColors.cyan),
+                style: AppTypography.bodyMedium.copyWith(color: AppColors.primaryIndigo, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 4),
               Text(
                 'Academic Tenure: ${PortfolioData.educationPeriod}',
-                style: AppTypography.codeFont(color: AppColors.textMuted, fontSize: 12),
+                style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12),
               ),
               const SizedBox(height: 16),
               const Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  TechBadge(label: 'Data Structures & Algorithms', color: AppColors.blue),
-                  TechBadge(label: 'Operating Systems', color: AppColors.cyan),
-                  TechBadge(label: 'Computer Networks', color: AppColors.emerald),
-                  TechBadge(label: 'Database Management Systems', color: AppColors.purple),
+                  TechBadge(label: 'Data Structures & Algorithms', color: AppColors.primaryIndigo),
+                  TechBadge(label: 'Operating Systems', color: AppColors.secondarySky),
+                  TechBadge(label: 'Computer Networks', color: AppColors.mintGreen),
+                  TechBadge(label: 'Database Management Systems', color: AppColors.rosePink),
                 ],
               ),
             ],
@@ -116,7 +116,7 @@ class AboutCardGrid extends StatelessWidget {
 
       // Card 3: Engineering Philosophy & Learning Radar
       TiltCard(
-        glowColor: AppColors.emerald,
+        glowColor: AppColors.mintGreen,
         child: GlassContainer(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -127,10 +127,10 @@ class AboutCardGrid extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.emerald.withValues(alpha: 0.12),
+                      color: AppColors.mintGreen.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.radar_outlined, color: AppColors.emerald, size: 24),
+                    child: const Icon(Icons.radar_outlined, color: AppColors.mintGreen, size: 24),
                   ),
                   const SizedBox(width: 14),
                   Text('Radar & Philosophy', style: AppTypography.cardTitle),
@@ -144,17 +144,17 @@ class AboutCardGrid extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 'Current Learning Sprints:',
-                style: AppTypography.codeFont(color: AppColors.emerald, fontSize: 13, fontWeight: FontWeight.w600),
+                style: AppTypography.codeFont(color: AppColors.mintGreen, fontSize: 13, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 10),
               const Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  TechBadge(label: 'Dart FFI & C-Interop', color: AppColors.emerald),
-                  TechBadge(label: 'Network Packet Forensics', color: AppColors.cyan),
-                  TechBadge(label: 'Zero-Trust Architecture', color: AppColors.neonPink),
-                  TechBadge(label: 'High-Performance Shaders', color: AppColors.electricViolet),
+                  TechBadge(label: 'Dart FFI & C-Interop', color: AppColors.mintGreen),
+                  TechBadge(label: 'Network Packet Forensics', color: AppColors.secondarySky),
+                  TechBadge(label: 'Zero-Trust Architecture', color: AppColors.rosePink),
+                  TechBadge(label: 'High-Performance Shaders', color: AppColors.primaryIndigo),
                 ],
               ),
             ],

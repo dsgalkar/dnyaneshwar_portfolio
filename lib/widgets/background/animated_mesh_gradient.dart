@@ -69,7 +69,7 @@ class _MeshGradientPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (size.width == 0 || size.height == 0) return;
 
-    // Blob 1: Top-Left Cyan/Blue
+    // Blob 1: Top-Left Soft Sky Blue
     final Offset blob1Center = Offset(
       size.width * 0.2 + math.sin(time) * 60,
       size.height * 0.15 + math.cos(time * 0.8) * 40,
@@ -77,45 +77,45 @@ class _MeshGradientPainter extends CustomPainter {
     final Paint blob1Paint = Paint()
       ..shader = RadialGradient(
         colors: [
-          AppColors.cyan.withValues(alpha: 0.08),
-          AppColors.blue.withValues(alpha: 0.03),
+          AppColors.cyan.withValues(alpha: 0.15),
+          AppColors.blue.withValues(alpha: 0.06),
           Colors.transparent,
         ],
-        stops: const [0.0, 0.45, 1.0],
-      ).createShader(Rect.fromCircle(center: blob1Center, radius: size.width * 0.45));
-    canvas.drawCircle(blob1Center, size.width * 0.45, blob1Paint);
+        stops: const [0.0, 0.5, 1.0],
+      ).createShader(Rect.fromCircle(center: blob1Center, radius: size.width * 0.5));
+    canvas.drawCircle(blob1Center, size.width * 0.5, blob1Paint);
 
-    // Blob 2: Middle-Right Purple/Violet
+    // Blob 2: Middle-Right Soft Lavender / Rose
     final Offset blob2Center = Offset(
       size.width * 0.85 + math.cos(time * 0.7) * 70,
-      size.height * 0.5 + math.sin(time * 0.9) * 60,
+      size.height * 0.45 + math.sin(time * 0.9) * 60,
     );
     final Paint blob2Paint = Paint()
       ..shader = RadialGradient(
         colors: [
-          AppColors.purple.withValues(alpha: 0.09),
-          AppColors.electricViolet.withValues(alpha: 0.04),
+          AppColors.purple.withValues(alpha: 0.12),
+          AppColors.neonPink.withValues(alpha: 0.08),
           Colors.transparent,
         ],
-        stops: const [0.0, 0.5, 1.0],
-      ).createShader(Rect.fromCircle(center: blob2Center, radius: size.width * 0.4));
-    canvas.drawCircle(blob2Center, size.width * 0.4, blob2Paint);
+        stops: const [0.0, 0.55, 1.0],
+      ).createShader(Rect.fromCircle(center: blob2Center, radius: size.width * 0.45));
+    canvas.drawCircle(blob2Center, size.width * 0.45, blob2Paint);
 
-    // Blob 3: Bottom-Left Emerald/Cyan
+    // Blob 3: Bottom-Left Soft Mint / Sky
     final Offset blob3Center = Offset(
-      size.width * 0.3 + math.sin(time * 1.1) * 50,
+      size.width * 0.35 + math.sin(time * 1.1) * 50,
       size.height * 0.85 + math.cos(time * 0.6) * 50,
     );
     final Paint blob3Paint = Paint()
       ..shader = RadialGradient(
         colors: [
-          AppColors.emerald.withValues(alpha: 0.06),
-          AppColors.cyan.withValues(alpha: 0.02),
+          AppColors.emerald.withValues(alpha: 0.10),
+          AppColors.cyan.withValues(alpha: 0.05),
           Colors.transparent,
         ],
-        stops: const [0.0, 0.4, 1.0],
-      ).createShader(Rect.fromCircle(center: blob3Center, radius: size.width * 0.35));
-    canvas.drawCircle(blob3Center, size.width * 0.35, blob3Paint);
+        stops: const [0.0, 0.45, 1.0],
+      ).createShader(Rect.fromCircle(center: blob3Center, radius: size.width * 0.4));
+    canvas.drawCircle(blob3Center, size.width * 0.4, blob3Paint);
   }
 
   @override

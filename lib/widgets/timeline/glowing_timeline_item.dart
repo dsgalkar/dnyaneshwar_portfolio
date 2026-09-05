@@ -33,11 +33,11 @@ class GlowingTimelineItem extends StatelessWidget {
                   height: 32,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.surfaceElevated,
-                    border: Border.all(color: AppColors.cyan, width: 2),
+                    color: Colors.white,
+                    border: Border.all(color: AppColors.primaryIndigo, width: 2),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.cyan.withValues(alpha: 0.5),
+                        color: AppColors.primaryIndigo.withValues(alpha: 0.25),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),
@@ -54,7 +54,7 @@ class GlowingTimelineItem extends StatelessWidget {
                       width: 2,
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [AppColors.cyan, AppColors.purple, Color(0x1F7F00FF)],
+                          colors: [AppColors.primaryIndigo, AppColors.secondarySky, Color(0x1F4F46E5)],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
@@ -83,13 +83,13 @@ class GlowingTimelineItem extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppColors.cyan.withValues(alpha: 0.12),
+                            color: AppColors.primaryIndigo.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             experience.period,
                             style: AppTypography.codeFont(
-                              color: AppColors.cyan,
+                              color: AppColors.primaryIndigo,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                             ),
@@ -98,12 +98,12 @@ class GlowingTimelineItem extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: AppColors.purple.withValues(alpha: 0.15),
+                            color: AppColors.rosePink.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
                             experience.roleType,
-                            style: AppTypography.badge.copyWith(color: AppColors.purple),
+                            style: AppTypography.badge.copyWith(color: AppColors.rosePink, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
@@ -122,7 +122,7 @@ class GlowingTimelineItem extends StatelessWidget {
                     // Organization
                     Text(
                       experience.organization,
-                      style: AppTypography.bodyMedium.copyWith(color: AppColors.cyan, fontWeight: FontWeight.w500),
+                      style: AppTypography.bodyMedium.copyWith(color: AppColors.primaryIndigo, fontWeight: FontWeight.w600),
                     ),
 
                     const SizedBox(height: 12),
@@ -142,7 +142,7 @@ class GlowingTimelineItem extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('▹ ', style: TextStyle(color: AppColors.cyan, fontSize: 13)),
+                            const Text('▹ ', style: TextStyle(color: AppColors.primaryIndigo, fontSize: 13)),
                             Expanded(
                               child: Text(
                                 highlight,
@@ -161,7 +161,7 @@ class GlowingTimelineItem extends StatelessWidget {
                       spacing: 6,
                       runSpacing: 6,
                       children: experience.tags.map((tag) {
-                        return TechBadge(label: tag, color: AppColors.blue);
+                        return TechBadge(label: tag, color: AppColors.primaryIndigo);
                       }).toList(),
                     ),
                   ],

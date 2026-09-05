@@ -60,7 +60,7 @@ class _AnimatedCounterState extends State<AnimatedCounter> with SingleTickerProv
           builder: (context, child) {
             return ShaderMask(
               shaderCallback: (bounds) => const LinearGradient(
-                colors: [AppColors.cyan, AppColors.blue],
+                colors: [AppColors.primaryIndigo, AppColors.secondarySky],
               ).createShader(bounds),
               child: Text(
                 '${_animation.value}${widget.suffix}',

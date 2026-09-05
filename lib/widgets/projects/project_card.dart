@@ -20,7 +20,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TiltCard(
-      glowColor: AppColors.cyan,
+      glowColor: AppColors.primaryIndigo,
       onTap: () => _openDetails(context),
       child: GlassContainer(
         padding: const EdgeInsets.all(24),
@@ -39,9 +39,9 @@ class ProjectCard extends StatelessWidget {
                       width: 48,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: AppColors.cyan.withValues(alpha: 0.12),
+                        color: AppColors.primaryIndigo.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.35)),
+                        border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
                       ),
                       alignment: Alignment.center,
                       child: Text(project.iconSymbol, style: const TextStyle(fontSize: 24)),
@@ -56,7 +56,7 @@ class ProjectCard extends StatelessWidget {
                         child: Text(
                           'FEATURED',
                           style: AppTypography.codeFont(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 10,
                             fontWeight: FontWeight.w800,
                           ),
@@ -79,7 +79,7 @@ class ProjectCard extends StatelessWidget {
                 Text(
                   project.category,
                   style: AppTypography.codeFont(
-                    color: AppColors.cyan,
+                    color: AppColors.primaryIndigo,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -102,7 +102,7 @@ class ProjectCard extends StatelessWidget {
                   spacing: 6,
                   runSpacing: 6,
                   children: project.technologies.take(4).map((tech) {
-                    return TechBadge(label: tech, color: AppColors.blue);
+                    return TechBadge(label: tech, color: AppColors.primaryIndigo);
                   }).toList(),
                 ),
               ],
@@ -128,7 +128,7 @@ class ProjectCard extends StatelessWidget {
   void _openDetails(BuildContext context) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.75),
+      barrierColor: Colors.black.withValues(alpha: 0.35),
       builder: (context) => ProjectDetailDialog(project: project),
     );
   }

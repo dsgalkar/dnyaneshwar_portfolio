@@ -120,20 +120,20 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_authState.isAdmin) {
       showDialog(
         context: context,
-        barrierColor: Colors.black.withValues(alpha: 0.75),
+        barrierColor: Colors.black.withValues(alpha: 0.35),
         builder: (ctx) => AdminDashboardModal(stateManager: _stateManager),
       );
     } else {
       showDialog(
         context: context,
-        barrierColor: Colors.black.withValues(alpha: 0.75),
+        barrierColor: Colors.black.withValues(alpha: 0.35),
         builder: (ctx) => AdminLoginDialog(
           authState: _authState,
           onLoginSuccess: () {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                backgroundColor: AppColors.surfaceElevated,
-                content: Text('⚡ Authenticated as Admin! Control Panel unlocked.', style: TextStyle(color: AppColors.cyan)),
+              SnackBar(
+                backgroundColor: Colors.white,
+                content: Text('⚡ Authenticated as Admin! Control Panel unlocked.', style: TextStyle(color: AppColors.primaryIndigo, fontWeight: FontWeight.w600)),
               ),
             );
           },
@@ -510,14 +510,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 36.0),
                             child: Column(
                               children: [
-                                const Divider(color: AppColors.surfaceGlassBorder),
+                                Divider(color: AppColors.slate200),
                                 const SizedBox(height: 20),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '© ${DateTime.now().year} Dnyaneshwar Galkar. Engineered with Flutter & Dart.',
-                                      style: AppTypography.codeFont(color: AppColors.textMuted, fontSize: 12),
+                                      style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12),
                                     ),
                                     Row(
                                       children: [
@@ -528,11 +528,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             padding: const EdgeInsets.all(6.0),
                                             child: Row(
                                               children: [
-                                                Icon(_authState.isAdmin ? Icons.verified_user_rounded : Icons.admin_panel_settings_outlined, size: 14, color: AppColors.cyan),
+                                                Icon(_authState.isAdmin ? Icons.verified_user_rounded : Icons.admin_panel_settings_outlined, size: 14, color: AppColors.primaryIndigo),
                                                 const SizedBox(width: 6),
                                                 Text(
                                                   _authState.isAdmin ? 'Admin Console' : 'Admin Login',
-                                                  style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 12),
+                                                  style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12),
                                                 ),
                                               ],
                                             ),
@@ -550,7 +550,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 const SizedBox(width: 6),
                                                 Text(
                                                   'Easter Egg',
-                                                  style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 12),
+                                                  style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12),
                                                 ),
                                               ],
                                             ),
@@ -592,22 +592,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             gradient: AppColors.primaryGradient,
                             borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primaryIndigo.withValues(alpha: 0.25),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
                           alignment: Alignment.center,
-                          child: Text('DG', style: AppTypography.codeFont(color: Colors.black, fontWeight: FontWeight.w900)),
+                          child: Text('DG', style: AppTypography.codeFont(color: Colors.white, fontWeight: FontWeight.w900)),
                         ),
                         Row(
                           children: [
                             if (_authState.isAdmin)
                               IconButton(
-                                icon: const Icon(Icons.tune_rounded, color: AppColors.emerald, size: 24),
-                                style: IconButton.styleFrom(backgroundColor: AppColors.surfaceElevated.withValues(alpha: 0.8)),
+                                icon: const Icon(Icons.tune_rounded, color: AppColors.mintGreen, size: 24),
+                                style: IconButton.styleFrom(backgroundColor: Colors.white.withValues(alpha: 0.9)),
                                 onPressed: _openAdminAuthOrDashboard,
                               ),
                             const SizedBox(width: 8),
                             IconButton(
-                              icon: const Icon(Icons.menu_rounded, color: AppColors.cyan, size: 28),
-                              style: IconButton.styleFrom(backgroundColor: AppColors.surfaceElevated.withValues(alpha: 0.8)),
+                              icon: const Icon(Icons.menu_rounded, color: AppColors.primaryIndigo, size: 28),
+                              style: IconButton.styleFrom(backgroundColor: Colors.white.withValues(alpha: 0.9)),
                               onPressed: () => _scaffoldKey.currentState?.openDrawer(),
                             ),
                           ],

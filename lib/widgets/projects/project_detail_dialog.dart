@@ -30,13 +30,13 @@ class ProjectDetailDialog extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.surfaceElevated.withValues(alpha: 0.92),
+                color: Colors.white.withValues(alpha: 0.98),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: AppColors.surfaceGlassBorder, width: 1.5),
+                border: Border.all(color: AppColors.slate200, width: 1.5),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.6),
-                    blurRadius: 35,
+                    color: AppColors.slate900.withValues(alpha: 0.12),
+                    blurRadius: 40,
                     offset: const Offset(0, 15),
                   ),
                 ],
@@ -55,9 +55,9 @@ class ProjectDetailDialog extends StatelessWidget {
                               width: 44,
                               height: 44,
                               decoration: BoxDecoration(
-                                color: AppColors.cyan.withValues(alpha: 0.15),
+                                color: AppColors.primaryIndigo.withValues(alpha: 0.08),
                                 borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4)),
+                                border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
                               ),
                               alignment: Alignment.center,
                               child: Text(project.iconSymbol, style: const TextStyle(fontSize: 22)),
@@ -67,7 +67,7 @@ class ProjectDetailDialog extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(project.title, style: AppTypography.cardTitle.copyWith(fontSize: 20)),
-                                Text(project.category, style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 12)),
+                                Text(project.category, style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12)),
                               ],
                             ),
                           ],
@@ -76,14 +76,14 @@ class ProjectDetailDialog extends StatelessWidget {
                           onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.close_rounded, color: AppColors.textSecondary),
                           style: IconButton.styleFrom(
-                            backgroundColor: AppColors.surfaceGlass,
+                            backgroundColor: AppColors.slate100,
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  const Divider(color: AppColors.surfaceGlassBorder, height: 1),
+                  Divider(color: AppColors.slate200, height: 1),
 
                   // Scrollable Body Content
                   Expanded(
@@ -93,20 +93,20 @@ class ProjectDetailDialog extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Tagline & Overview
-                          Text('Overview', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 14)),
+                          Text('Overview', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 14, fontWeight: FontWeight.w700)),
                           const SizedBox(height: 6),
                           Text(project.description, style: AppTypography.bodyLarge),
 
                           const SizedBox(height: 24),
 
                           // Tech Stack Badges
-                          Text('Tech Stack & Libraries', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 14)),
+                          Text('Tech Stack & Libraries', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 14, fontWeight: FontWeight.w700)),
                           const SizedBox(height: 10),
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
                             children: project.technologies.map((t) {
-                              return TechBadge(label: t, color: AppColors.blue, isGlowing: true);
+                              return TechBadge(label: t, color: AppColors.primaryIndigo, isGlowing: false);
                             }).toList(),
                           ),
 
@@ -119,16 +119,16 @@ class ProjectDetailDialog extends StatelessWidget {
                               Expanded(
                                 child: GlassContainer(
                                   padding: const EdgeInsets.all(16),
-                                  color: AppColors.surface.withValues(alpha: 0.6),
-                                  borderColor: AppColors.warning.withValues(alpha: 0.3),
+                                  color: AppColors.amber.withValues(alpha: 0.05),
+                                  borderColor: AppColors.amber.withValues(alpha: 0.4),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
-                                          const Icon(Icons.error_outline_rounded, color: AppColors.warning, size: 18),
+                                          const Icon(Icons.error_outline_rounded, color: AppColors.amber, size: 18),
                                           const SizedBox(width: 8),
-                                          Text('The Problem', style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.warning)),
+                                          Text('The Problem', style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.amber)),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
@@ -141,16 +141,16 @@ class ProjectDetailDialog extends StatelessWidget {
                               Expanded(
                                 child: GlassContainer(
                                   padding: const EdgeInsets.all(16),
-                                  color: AppColors.surface.withValues(alpha: 0.6),
-                                  borderColor: AppColors.emerald.withValues(alpha: 0.3),
+                                  color: AppColors.mintGreen.withValues(alpha: 0.05),
+                                  borderColor: AppColors.mintGreen.withValues(alpha: 0.4),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
-                                          const Icon(Icons.check_circle_outline_rounded, color: AppColors.emerald, size: 18),
+                                          const Icon(Icons.check_circle_outline_rounded, color: AppColors.mintGreen, size: 18),
                                           const SizedBox(width: 8),
-                                          Text('The Solution', style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.emerald)),
+                                          Text('The Solution', style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.mintGreen)),
                                         ],
                                       ),
                                       const SizedBox(height: 10),
@@ -165,7 +165,7 @@ class ProjectDetailDialog extends StatelessWidget {
                           const SizedBox(height: 28),
 
                           // Key Features
-                          Text('Key Architectural Features', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 14)),
+                          Text('Key Architectural Features', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 14, fontWeight: FontWeight.w700)),
                           const SizedBox(height: 10),
                           for (final feature in project.features) ...[
                             Padding(
@@ -187,15 +187,16 @@ class ProjectDetailDialog extends StatelessWidget {
                           // System Architecture & Engineering Takeaways
                           GlassContainer(
                             padding: const EdgeInsets.all(18),
-                            color: AppColors.surfaceElevated.withValues(alpha: 0.5),
+                            color: AppColors.slate50,
+                            borderColor: AppColors.slate200,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('System Architecture:', style: AppTypography.codeFont(color: AppColors.electricViolet, fontSize: 13, fontWeight: FontWeight.w700)),
+                                Text('System Architecture:', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.w700)),
                                 const SizedBox(height: 4),
                                 Text(project.architecture, style: AppTypography.bodySmall),
                                 const SizedBox(height: 12),
-                                Text('Key Engineering Learnings:', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 13, fontWeight: FontWeight.w700)),
+                                Text('Key Engineering Learnings:', style: AppTypography.codeFont(color: AppColors.secondarySky, fontSize: 13, fontWeight: FontWeight.w700)),
                                 const SizedBox(height: 4),
                                 Text(project.learnings, style: AppTypography.bodySmall),
                               ],

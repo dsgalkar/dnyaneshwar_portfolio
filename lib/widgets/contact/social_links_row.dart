@@ -34,21 +34,21 @@ class SocialLinksRow extends StatelessWidget {
         handle: PortfolioData.email,
         url: 'mailto:${PortfolioData.email}',
         icon: Icons.alternate_email_rounded,
-        color: AppColors.cyan,
+        color: AppColors.primaryIndigo,
       ),
       _SocialLinkItem(
         title: 'LinkedIn',
         handle: 'in/dnyaneshwargalkar',
         url: PortfolioData.linkedinUrl,
         icon: Icons.link_rounded,
-        color: AppColors.blue,
+        color: AppColors.secondarySky,
       ),
       _SocialLinkItem(
         title: 'GitHub',
         handle: 'github.com/dnyaneshwargalkar',
         url: PortfolioData.githubUrl,
         icon: Icons.code_rounded,
-        color: AppColors.emerald,
+        color: AppColors.mintGreen,
       ),
     ];
 
@@ -73,9 +73,9 @@ class SocialLinksRow extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: item.color.withValues(alpha: 0.12),
+                      color: item.color.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: item.color.withValues(alpha: 0.35)),
+                      border: Border.all(color: item.color.withValues(alpha: 0.2)),
                     ),
                     alignment: Alignment.center,
                     child: Icon(item.icon, color: item.color, size: 22),
@@ -86,7 +86,7 @@ class SocialLinksRow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(item.title, style: AppTypography.cardTitle.copyWith(fontSize: 16)),
-                        Text(item.handle, style: AppTypography.codeFont(color: AppColors.textMuted, fontSize: 12)),
+                        Text(item.handle, style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12)),
                       ],
                     ),
                   ),

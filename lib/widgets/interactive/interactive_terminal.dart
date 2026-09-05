@@ -122,8 +122,8 @@ class _InteractiveTerminalState extends State<InteractiveTerminal> {
   Widget build(BuildContext context) {
     return GlassContainer(
       padding: EdgeInsets.zero,
-      color: AppColors.terminalBg.withValues(alpha: 0.95),
-      borderColor: AppColors.cyan.withValues(alpha: 0.35),
+      color: Colors.white.withValues(alpha: 0.95),
+      borderColor: AppColors.primaryIndigo.withValues(alpha: 0.2),
       borderRadius: 16,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -132,9 +132,9 @@ class _InteractiveTerminalState extends State<InteractiveTerminal> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: AppColors.surfaceElevated.withValues(alpha: 0.8),
+              color: AppColors.slate100,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              border: const Border(bottom: BorderSide(color: AppColors.surfaceGlassBorder)),
+              border: Border(bottom: BorderSide(color: AppColors.slate200)),
             ),
             child: Row(
               children: [
@@ -151,7 +151,7 @@ class _InteractiveTerminalState extends State<InteractiveTerminal> {
                 Expanded(
                   child: Text(
                     'bash — dnyaneshwar@portfolio: ~ (interactive)',
-                    style: AppTypography.codeFont(color: AppColors.textMuted, fontSize: 12),
+                    style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -170,9 +170,9 @@ class _InteractiveTerminalState extends State<InteractiveTerminal> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(item.prompt, style: AppTypography.codeFont(color: AppColors.terminalGreen, fontSize: 13, fontWeight: FontWeight.w700)),
+                      Text(item.prompt, style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.w700)),
                       Expanded(
-                        child: Text(item.command, style: AppTypography.codeFont(color: AppColors.textPrimary, fontSize: 13)),
+                        child: Text(item.command, style: AppTypography.codeFont(color: AppColors.textPrimary, fontSize: 13, fontWeight: FontWeight.w600)),
                       ),
                     ],
                   ),
@@ -182,7 +182,7 @@ class _InteractiveTerminalState extends State<InteractiveTerminal> {
                     child: Text(
                       item.output,
                       style: AppTypography.codeFont(
-                        color: AppColors.cyan.withValues(alpha: 0.9),
+                        color: AppColors.textSecondary,
                         fontSize: 12,
                       ),
                     ),
@@ -192,13 +192,13 @@ class _InteractiveTerminalState extends State<InteractiveTerminal> {
                 // Live Input Row
                 Row(
                   children: [
-                    Text('dnyaneshwar@portfolio:~\$ ', style: AppTypography.codeFont(color: AppColors.terminalGreen, fontSize: 13, fontWeight: FontWeight.w700)),
+                    Text('dnyaneshwar@portfolio:~\$ ', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.w700)),
                     Expanded(
                       child: TextField(
                         controller: _textController,
                         focusNode: _focusNode,
-                        style: AppTypography.codeFont(color: Colors.white, fontSize: 13),
-                        cursorColor: AppColors.cyan,
+                        style: AppTypography.codeFont(color: AppColors.textPrimary, fontSize: 13),
+                        cursorColor: AppColors.primaryIndigo,
                         decoration: const InputDecoration(
                           isDense: true,
                           contentPadding: EdgeInsets.zero,

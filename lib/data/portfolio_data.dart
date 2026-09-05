@@ -221,12 +221,12 @@ class PortfolioData {
     ),
   ];
 
-  // Featured Projects Case Studies
+  // Featured Projects Case Studies (1 Flagship Demo Project)
   static const List<ProjectModel> projects = [
     ProjectModel(
       id: 'cybershield-guard',
       title: 'CyberShield Guard',
-      tagline: 'On-device network monitor & vulnerability scanner with live packet inspection.',
+      tagline: 'On-device network monitor & vulnerability scanner with live packet telemetry.',
       description: 'A mobile-first cybersecurity suite built with Flutter and native Android bridging. Analyzes WiFi network vulnerabilities, detects ARP spoofing attacks, and scores local device security posture in real-time.',
       problem: 'Mobile users on public Wi-Fi networks are constantly vulnerable to man-in-the-middle attacks, DNS hijacking, and unauthorized device probing without having accessible diagnostic tools.',
       solution: 'Engineered an intuitive mobile application that performs background network telemetry, flags ARP poisoning attempts instantly, and provides actionable remediation guidance.',
@@ -235,7 +235,7 @@ class PortfolioData {
         'Local port scanner and open port risk assessment',
         'Cryptographic hash verification tool for downloaded files',
         'Offline vulnerability signature database',
-        'Dark cyber aesthetic with interactive latency & packet graphs'
+        'Interactive real-time latency & packet throughput graphs'
       ],
       technologies: ['Flutter', 'Dart', 'Android Native (JNI)', 'Scapy', 'AES-256', 'CustomPainter'],
       architecture: 'Clean Architecture with separate Network Scanning isolate, Event Stream Controller, and reactive UI presentation layer.',
@@ -247,99 +247,9 @@ class PortfolioData {
       isFeatured: true,
       iconSymbol: '🛡️',
     ),
-    ProjectModel(
-      id: 'omniflow-ecosystem',
-      title: 'OmniFlow Task Ecosystem',
-      tagline: 'Collaborative task & developer workflow manager with real-time cloud sync.',
-      description: 'A full-scale productivity and milestone tracking desktop & mobile application featuring Kanban boards, Gantt timeline views, automated GitHub webhook synchronization, and offline-first persistence.',
-      problem: 'Engineering student teams struggle with scattered project tools that lack lightweight developer integration and real-time collaboration.',
-      solution: 'Built a unified workspace that bridges task tracking with GitHub activity, cloud Firestore real-time synchronization, and smooth drag-and-drop mechanics.',
-      features: [
-        'Fluid drag-and-drop Kanban board with custom physics',
-        'Live multi-user collaboration with Cloud Firestore streams',
-        'GitHub commit & pull-request linkage via webhooks',
-        'Offline-first caching with automatic conflict resolution',
-        'Custom interactive telemetry charts'
-      ],
-      technologies: ['Flutter', 'Dart', 'Firebase Firestore', 'Cloud Functions', 'REST APIs', 'Riverpod'],
-      architecture: 'Riverpod-driven state management layer coupled with a repository pattern caching layer for offline resilience.',
-      challenges: 'Handling optimistic UI updates with bi-directional multi-user concurrent edits.',
-      learnings: 'Deepened mastery in stream architectures, state reconciliation, and Flutter desktop keyboard shortcut integration.',
-      githubUrl: 'https://github.com/dnyaneshwargalkar/omniflow-app',
-      liveDemoUrl: 'https://omniflow-demo.web.app',
-      category: 'Mobile',
-      isFeatured: true,
-      iconSymbol: '⚡',
-    ),
-    ProjectModel(
-      id: 'netsentinel-ids',
-      title: 'NetSentinel IDS',
-      tagline: 'Lightweight intrusion detection & network anomaly classifier.',
-      description: 'A hybrid network traffic analyzer developed using Python backend processing with a Flutter desktop visualization frontend. Dissects live PCAP streams and flags abnormal traffic spikes.',
-      problem: 'Enterprise intrusion detection systems are overly bloated and hard to configure for small lab environments and student sandboxes.',
-      solution: 'Created a modular, portable intrusion detector with interactive visual rule configuration and instant desktop alerts.',
-      features: [
-        'Live PCAP stream parsing and packet header dissection',
-        'Statistical anomaly threshold detection for SYN floods & port scans',
-        'Custom rule builder for signature matching',
-        'Exportable forensics reports in JSON and CSV format'
-      ],
-      technologies: ['Python', 'Flutter Desktop', 'Wireshark Libs', 'WebSockets', 'SQLite'],
-      architecture: 'Client-server architecture communicating over local Unix domain sockets / WebSockets with decoupled telemetry workers.',
-      challenges: 'Maintaining sub-millisecond parsing throughput during heavy packet bursts.',
-      learnings: 'Gained profound insights into raw socket handling, OSI Layer 3/4 headers, and IPC performance.',
-      githubUrl: 'https://github.com/dnyaneshwargalkar/netsentinel-ids',
-      category: 'Cybersecurity',
-      isFeatured: true,
-      iconSymbol: '🛰️',
-    ),
-    ProjectModel(
-      id: 'datalens-analytics',
-      title: 'DataLens Analytics',
-      tagline: 'Interactive dataset exploration & automated visual reporting toolkit.',
-      description: 'A desktop application engineered for rapid exploratory data analysis (EDA), generating instant statistical summaries, correlation heatmaps, and outlier detection.',
-      problem: 'Non-technical stakeholders and early engineering students find raw dataset exploration in code notebooks cumbersome to share and inspect.',
-      solution: 'Developed an interactive drag-and-drop dataset visualizer that instantly charts distribution curves, missing value matrices, and correlation grids.',
-      features: [
-        'Drag-and-drop CSV & JSON ingestion with automatic type inference',
-        'Interactive correlation matrices and distribution histograms',
-        'Automated outlier detection using IQR and Z-score methods',
-        'Exportable high-resolution vector charts'
-      ],
-      technologies: ['Flutter Desktop', 'Dart', 'Python Engine', 'CustomPainter', 'Data Science'],
-      architecture: 'Modular pipeline with data transformation microservices and CustomPainter chart engines.',
-      challenges: 'Rendering tens of thousands of data points smoothly without frame drops.',
-      learnings: 'Engineered hardware-accelerated Canvas batch rendering and optimized data buffer structures.',
-      githubUrl: 'https://github.com/dnyaneshwargalkar/datalens-analytics',
-      category: 'AI / Data',
-      isFeatured: false,
-      iconSymbol: '📊',
-    ),
-    ProjectModel(
-      id: 'vamint-connect',
-      title: 'VAMINT Community App',
-      tagline: 'Official event management & hackathon companion app for the VAMINT club.',
-      description: 'A comprehensive event ecosystem for students to register for hackathons, form teams, submit projects, access workshop slide decks, and receive real-time schedule notifications.',
-      problem: 'Coordinating multi-day technical club events through scattered Google Forms and Discord channels causes high friction.',
-      solution: 'Built a unified Flutter mobile application with QR-code event check-ins, automated team matchmaking, and live announcement feeds.',
-      features: [
-        'Fast QR Code ticketing and on-site check-in scanner',
-        'Live hackathon countdown timer and submission portal',
-        'Interactive community discussion boards',
-        'Push notifications for critical schedule changes'
-      ],
-      technologies: ['Flutter', 'Firebase Auth', 'Firestore', 'FCM', 'QR Scanner'],
-      architecture: 'Layered architecture with offline persistence and cloud functions automating attendee certificate generation.',
-      challenges: 'Ensuring seamless offline event check-in when venue WiFi experienced intermittent dropouts.',
-      learnings: 'Implemented robust local SQLite event caching with background reconciliation sync.',
-      githubUrl: 'https://github.com/dnyaneshwargalkar/vamint-connect-app',
-      category: 'Mobile',
-      isFeatured: true,
-      iconSymbol: '🌟',
-    ),
   ];
 
-  // Experience & Milestones Timeline
+  // Experience & Milestones Timeline (1 Flagship Demo Experience)
   static const List<ExperienceModel> experiences = [
     ExperienceModel(
       title: 'Technical Core Team & Developer Lead',
@@ -354,48 +264,6 @@ class PortfolioData {
       ],
       tags: ['Flutter', 'Community Leadership', 'Mentorship', 'Workshops', 'Event Tech'],
       icon: '🚀',
-    ),
-    ExperienceModel(
-      title: 'Hackathon Finalist & Lead Builder',
-      organization: 'National College Hackathons',
-      period: '2024',
-      roleType: 'Hackathon',
-      description: 'Engineered rapid functional prototypes in 24-36 hour continuous hackathons, focusing on cybersecurity tools and smart utility apps.',
-      highlights: [
-        'Built an end-to-end prototype for decentralized student verification in under 30 hours.',
-        'Demonstrated live product architecture and technical pitch to enterprise jury panels.',
-        'Ranked in top 5% among 120+ competing engineering teams nationwide.'
-      ],
-      tags: ['Rapid Prototyping', 'Team Leadership', 'Pitching', 'Agile'],
-      icon: '🏆',
-    ),
-    ExperienceModel(
-      title: 'Cybersecurity & Open Source Contributor',
-      organization: 'Open Source Community',
-      period: '2023 — Present',
-      roleType: 'Open Source',
-      description: 'Auditing security tools, contributing documentation fixes, and publishing reusable Flutter and Dart utility packages.',
-      highlights: [
-        'Contributed security hardening patches and documentation to open-source developer repositories.',
-        'Authored open-source Flutter boilerplates with clean architecture and reactive state management.',
-        'Active participant in Linux system administration and cybersecurity Capture The Flag (CTF) challenges.'
-      ],
-      tags: ['Open Source', 'Security Audits', 'Git', 'Linux', 'Dart Packages'],
-      icon: '🛡️',
-    ),
-    ExperienceModel(
-      title: 'Computer Engineering Scholar',
-      organization: 'Department of Computer Engineering',
-      period: '2023 — 2027',
-      roleType: 'Academic',
-      description: 'Deep diving into core computer science foundations: Data Structures & Algorithms, Operating Systems, Computer Networks, and DBMS.',
-      highlights: [
-        'Maintained high academic standing with strong coursework in OS internals, Networks, and Object-Oriented Design.',
-        'Built laboratory simulation tools for memory allocation algorithms and CPU scheduling in C++.',
-        'Selected as student coordinator for departmental technical exhibitions.'
-      ],
-      tags: ['Data Structures', 'Operating Systems', 'Computer Networks', 'Algorithms'],
-      icon: '🎓',
     ),
   ];
 

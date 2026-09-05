@@ -70,7 +70,7 @@ class SkillCard extends StatelessWidget {
                   height: 6,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceElevated,
+                    color: AppColors.slate200,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -80,12 +80,12 @@ class SkillCard extends StatelessWidget {
                     height: 6,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [categoryColor.withValues(alpha: 0.6), categoryColor],
+                        colors: [categoryColor.withValues(alpha: 0.7), categoryColor],
                       ),
                       borderRadius: BorderRadius.circular(3),
                       boxShadow: [
                         BoxShadow(
-                          color: categoryColor.withValues(alpha: 0.6),
+                          color: categoryColor.withValues(alpha: 0.4),
                           blurRadius: 6,
                           spreadRadius: 1,
                         ),
@@ -117,15 +117,15 @@ class SkillCard extends StatelessWidget {
 
             if (skill.usedInProjects.isNotEmpty) ...[
               const SizedBox(height: 14),
-              const Divider(color: AppColors.surfaceGlassBorder, height: 1),
+              Divider(color: AppColors.slate200, height: 1),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  const Icon(Icons.layers_outlined, size: 14, color: AppColors.textMuted),
+                  const Icon(Icons.layers_outlined, size: 14, color: AppColors.textSecondary),
                   const SizedBox(width: 6),
                   Text(
                     'Key Projects: ${skill.usedInProjects.join(', ')}',
-                    style: AppTypography.codeFont(color: AppColors.textMuted, fontSize: 11),
+                    style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 11),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
@@ -140,17 +140,17 @@ class SkillCard extends StatelessWidget {
   Color _getCategoryColor(SkillCategory category) {
     switch (category) {
       case SkillCategory.programming:
-        return AppColors.cyan;
+        return AppColors.primaryIndigo;
       case SkillCategory.appDev:
-        return AppColors.blue;
+        return AppColors.secondarySky;
       case SkillCategory.web:
-        return AppColors.electricViolet;
+        return AppColors.violet;
       case SkillCategory.cybersecurity:
-        return AppColors.neonPink;
+        return AppColors.rosePink;
       case SkillCategory.data:
-        return AppColors.emerald;
+        return AppColors.mintGreen;
       case SkillCategory.tools:
-        return AppColors.warning;
+        return AppColors.amber;
     }
   }
 }

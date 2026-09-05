@@ -1,44 +1,67 @@
 import 'package:flutter/material.dart';
 
-/// Centralized color palette for the futuristic, dark-cinematic portfolio
+/// Centralized color palette for the modern, aesthetic pleasant-light portfolio
 class AppColors {
   AppColors._();
 
-  // Backgrounds
-  static const Color background = Color(0xFF07090E);
-  static const Color surface = Color(0xFF0D121D);
-  static const Color surfaceElevated = Color(0xFF131B2A);
-  static const Color surfaceGlass = Color(0x1AFFFFFF);
-  static const Color surfaceGlassBorder = Color(0x26FFFFFF);
+  // Backgrounds & Surfaces (Aesthetic Porcelain & Ivory)
+  static const Color background = Color(0xFFF8FAFC);
+  static const Color backgroundAlt = Color(0xFFF1F5F9);
+  static const Color backgroundLight = Color(0xFFF8FAFC);
+  static const Color cardLight = Color(0xFFFFFFFF);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceElevated = Color(0xFFFFFFFF);
+  static const Color surfaceGlass = Color(0xCCFFFFFF);
+  static const Color surfaceGlassBorder = Color(0xFFE2E8F0);
 
-  // Primary Cyber Accents
-  static const Color cyan = Color(0xFF00F2FE);
-  static const Color blue = Color(0xFF4FACFE);
-  static const Color purple = Color(0xFF7F00FF);
-  static const Color neonPink = Color(0xFFFF007F);
-  static const Color emerald = Color(0xFF00F5A0);
-  static const Color electricViolet = Color(0xFF9D4EDD);
+  // Slate Scale
+  static const Color slate50 = Color(0xFFF8FAFC);
+  static const Color slate100 = Color(0xFFF1F5F9);
+  static const Color slate200 = Color(0xFFE2E8F0);
+  static const Color slate300 = Color(0xFFCBD5E1);
+  static const Color slate400 = Color(0xFF94A3B8);
+  static const Color slate500 = Color(0xFF64748B);
+  static const Color slate600 = Color(0xFF475569);
+  static const Color slate700 = Color(0xFF334155);
+  static const Color slate800 = Color(0xFF1E293B);
+  static const Color slate900 = Color(0xFF0F172A);
+
+  // Modern Aesthetic Accents (Soft Indigo, Sky Blue, Rose, Mint, Violet)
+  static const Color primaryIndigo = Color(0xFF4F46E5); // Royal Indigo
+  static const Color secondarySky = Color(0xFF0EA5E9); // Modern Sky
+  static const Color rosePink = Color(0xFFF43F5E); // Soft Rose Coral
+  static const Color mintGreen = Color(0xFF10B981); // Emerald Mint
+  static const Color violet = Color(0xFF7C3AED); // Violet
+
+  // Backward-compatible aliases
+  static const Color cyan = secondarySky;
+  static const Color blue = primaryIndigo;
+  static const Color purple = violet;
+  static const Color neonPink = rosePink;
+  static const Color emerald = mintGreen;
+  static const Color electricViolet = Color(0xFF8B5CF6);
+  static const Color amber = Color(0xFFF59E0B);
 
   // Status & Metrics
-  static const Color success = Color(0xFF00E676);
-  static const Color warning = Color(0xFFFFAB00);
-  static const Color error = Color(0xFFFF5252);
+  static const Color success = Color(0xFF10B981);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color error = Color(0xFFEF4444);
 
-  // Text Colors
-  static const Color textPrimary = Color(0xFFF1F5F9);
-  static const Color textSecondary = Color(0xFF94A3B8);
-  static const Color textMuted = Color(0xFF64748B);
-  static const Color textHighlight = Color(0xFF38BDF8);
+  // High-Contrast Refined Typography
+  static const Color textPrimary = Color(0xFF0F172A); // Deep Charcoal Slate
+  static const Color textSecondary = Color(0xFF475569); // Medium Slate
+  static const Color textMuted = Color(0xFF94A3B8); // Light Slate
+  static const Color textHighlight = Color(0xFF4F46E5); // Vibrant Indigo
 
-  // Terminal Colors
-  static const Color terminalBg = Color(0xFF05070B);
-  static const Color terminalGreen = Color(0xFF4AF626);
-  static const Color terminalCyan = Color(0xFF00F2FE);
-  static const Color terminalYellow = Color(0xFFFFD166);
+  // Terminal Window Colors
+  static const Color terminalBg = Color(0xFF1E293B);
+  static const Color terminalGreen = Color(0xFF10B981);
+  static const Color terminalCyan = Color(0xFF38BDF8);
+  static const Color terminalYellow = Color(0xFFFBBF24);
 
-  // Gradients
+  // Aesthetic Gradients
   static const LinearGradient primaryGradient = LinearGradient(
-    colors: [cyan, blue],
+    colors: [blue, cyan],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -55,15 +78,22 @@ class AppColors {
     end: Alignment.bottomRight,
   );
 
-  static const LinearGradient glassGradient = LinearGradient(
-    colors: [Color(0x1F2B3958), Color(0x0A101726)],
+  static const LinearGradient roseIndigoGradient = LinearGradient(
+    colors: [neonPink, blue],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
-  static const LinearGradient darkCardGradient = LinearGradient(
-    colors: [Color(0xFF101726), Color(0xFF090D15)],
+  static const LinearGradient glassGradient = LinearGradient(
+    colors: [Color(0xF5FFFFFF), Color(0xEBEEF2F6)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient cardGradient = LinearGradient(
+    colors: [Color(0xFFFFFFFF), Color(0xFFF8FAFC)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 }
+

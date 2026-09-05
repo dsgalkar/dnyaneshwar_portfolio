@@ -27,12 +27,12 @@ class ResumeViewerDialog extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.surfaceElevated.withValues(alpha: 0.96),
+                color: Colors.white.withValues(alpha: 0.98),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4), width: 1.5),
+                border: Border.all(color: AppColors.slate200, width: 1.5),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.6),
+                    color: AppColors.slate900.withValues(alpha: 0.12),
                     blurRadius: 35,
                     offset: const Offset(0, 15),
                   ),
@@ -56,27 +56,28 @@ class ResumeViewerDialog extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               alignment: Alignment.center,
-                              child: const Icon(Icons.description_outlined, color: Colors.black, size: 24),
+                              child: const Icon(Icons.description_outlined, color: Colors.white, size: 24),
                             ),
                             const SizedBox(width: 14),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(resume.title, style: AppTypography.cardTitle.copyWith(fontSize: 18)),
-                                Text('${resume.roleFocus} • ${resume.fileSize}', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 12)),
+                                Text('${resume.roleFocus} • ${resume.fileSize}', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12)),
                               ],
                             ),
                           ],
                         ),
                         IconButton(
                           icon: const Icon(Icons.close_rounded, color: AppColors.textSecondary),
+                          style: IconButton.styleFrom(backgroundColor: AppColors.slate100),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
                   ),
 
-                  const Divider(color: AppColors.surfaceGlassBorder, height: 1),
+                  Divider(color: AppColors.slate200, height: 1),
 
                   // CV Document Body
                   Expanded(
@@ -89,6 +90,8 @@ class ResumeViewerDialog extends StatelessWidget {
                           GlassContainer(
                             padding: const EdgeInsets.all(20),
                             borderRadius: 16,
+                            color: AppColors.slate50,
+                            borderColor: AppColors.slate200,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -97,12 +100,12 @@ class ResumeViewerDialog extends StatelessWidget {
                                   children: [
                                     Text('Dnyaneshwar Galkar', style: AppTypography.heroHeading(context, fontSize: 22)),
                                     const SizedBox(height: 4),
-                                    Text('Computer Engineering Student & Systems Developer', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 13)),
+                                    Text('Computer Engineering Student & Systems Developer', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.w600)),
                                     const SizedBox(height: 4),
                                     Text('Email: dnyaneshwargalkar@gmail.com | Pune, India', style: AppTypography.bodySmall),
                                   ],
                                 ),
-                                TechBadge(label: resume.badge, color: AppColors.emerald, isGlowing: true),
+                                TechBadge(label: resume.badge, color: AppColors.mintGreen, isGlowing: false),
                               ],
                             ),
                           ),
@@ -110,7 +113,7 @@ class ResumeViewerDialog extends StatelessWidget {
                           const SizedBox(height: 24),
 
                           // Profile Focus Synopsis
-                          Text('TARGET SPECIALIZATION', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 13, fontWeight: FontWeight.bold)),
+                          Text('TARGET SPECIALIZATION', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           Text(
                             'Specialized technical dossier optimized for ${resume.roleFocus}. Updated: ${resume.lastUpdated}.',
@@ -120,7 +123,7 @@ class ResumeViewerDialog extends StatelessWidget {
                           const SizedBox(height: 20),
 
                           // Highlights
-                          Text('KEY CAREER & TECHNICAL HIGHLIGHTS', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 13, fontWeight: FontWeight.bold)),
+                          Text('KEY CAREER & TECHNICAL HIGHLIGHTS', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 10),
                           for (final point in resume.summaryPoints) ...[
                             Padding(
@@ -128,7 +131,7 @@ class ResumeViewerDialog extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text('▹ ', style: TextStyle(color: AppColors.cyan, fontSize: 14)),
+                                  const Text('▹ ', style: TextStyle(color: AppColors.primaryIndigo, fontSize: 14)),
                                   Expanded(child: Text(point, style: AppTypography.bodyMedium)),
                                 ],
                               ),
@@ -138,16 +141,18 @@ class ResumeViewerDialog extends StatelessWidget {
                           const SizedBox(height: 20),
 
                           // Education Synopsis
-                          Text('FORMAL EDUCATION', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 13, fontWeight: FontWeight.bold)),
+                          Text('FORMAL EDUCATION', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 13, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           GlassContainer(
                             padding: const EdgeInsets.all(16),
+                            color: AppColors.slate50,
+                            borderColor: AppColors.slate200,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Bachelor of Engineering in Computer Engineering', style: AppTypography.cardTitle.copyWith(fontSize: 15)),
                                 const SizedBox(height: 2),
-                                Text('Savitribai Phule Pune University (2023 — 2027)', style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 12)),
+                                Text('Savitribai Phule Pune University (2023 — 2027)', style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12)),
                                 const SizedBox(height: 6),
                                 Text('Core Coursework: Operating Systems, Computer Networks, Data Structures & Algorithms, DBMS, Cyber Defense.', style: AppTypography.bodySmall),
                               ],

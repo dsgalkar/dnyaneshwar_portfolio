@@ -31,17 +31,17 @@ class SkillCategorySelector extends StatelessWidget {
                 duration: const Duration(milliseconds: 220),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.cyan.withValues(alpha: 0.18) : AppColors.surfaceElevated.withValues(alpha: 0.5),
+                  color: isSelected ? AppColors.primaryIndigo.withValues(alpha: 0.1) : Colors.white.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isSelected ? AppColors.cyan : AppColors.surfaceGlassBorder,
+                    color: isSelected ? AppColors.primaryIndigo : AppColors.slate200,
                     width: 1.2,
                   ),
                   boxShadow: isSelected
                       ? [
                           BoxShadow(
-                            color: AppColors.cyan.withValues(alpha: 0.3),
-                            blurRadius: 12,
+                            color: AppColors.primaryIndigo.withValues(alpha: 0.15),
+                            blurRadius: 10,
                             spreadRadius: 1,
                           ),
                         ]
@@ -56,7 +56,7 @@ class SkillCategorySelector extends StatelessWidget {
                       category.label,
                       style: AppTypography.button.copyWith(
                         fontSize: 13,
-                        color: isSelected ? AppColors.cyan : AppColors.textSecondary,
+                        color: isSelected ? AppColors.primaryIndigo : AppColors.textSecondary,
                         fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                       ),
                     ),

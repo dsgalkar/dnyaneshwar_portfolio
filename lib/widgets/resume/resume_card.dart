@@ -18,11 +18,11 @@ class ResumeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TiltCard(
-      glowColor: resume.isPrimary ? AppColors.cyan : AppColors.blue,
+      glowColor: AppColors.primaryIndigo,
       onTap: () => _openViewer(context),
       child: GlassContainer(
         padding: const EdgeInsets.all(24),
-        borderColor: resume.isPrimary ? AppColors.cyan.withValues(alpha: 0.5) : null,
+        borderColor: resume.isPrimary ? AppColors.primaryIndigo.withValues(alpha: 0.3) : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,20 +38,20 @@ class ResumeCard extends StatelessWidget {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.cyan.withValues(alpha: 0.12),
+                        color: AppColors.primaryIndigo.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.35)),
+                        border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
                       ),
                       alignment: Alignment.center,
-                      child: const Icon(Icons.description_outlined, color: AppColors.cyan, size: 24),
+                      child: const Icon(Icons.description_outlined, color: AppColors.primaryIndigo, size: 24),
                     ),
                     Row(
                       children: [
                         if (resume.isPrimary) ...[
-                          const TechBadge(label: 'PRIMARY', color: AppColors.emerald, isGlowing: true),
+                          const TechBadge(label: 'PRIMARY', color: AppColors.mintGreen, isGlowing: false),
                           const SizedBox(width: 6),
                         ],
-                        TechBadge(label: resume.badge, color: AppColors.blue),
+                        TechBadge(label: resume.badge, color: AppColors.secondarySky),
                       ],
                     ),
                   ],
@@ -69,7 +69,7 @@ class ResumeCard extends StatelessWidget {
 
                 Text(
                   resume.roleFocus,
-                  style: AppTypography.codeFont(color: AppColors.cyan, fontSize: 12),
+                  style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12),
                 ),
 
                 const SizedBox(height: 12),
@@ -81,7 +81,7 @@ class ResumeCard extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('▹ ', style: TextStyle(color: AppColors.cyan, fontSize: 12)),
+                        const Text('▹ ', style: TextStyle(color: AppColors.primaryIndigo, fontSize: 12)),
                         Expanded(
                           child: Text(
                             p,
@@ -132,7 +132,7 @@ class ResumeCard extends StatelessWidget {
   void _openViewer(BuildContext context) {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.75),
+      barrierColor: Colors.black.withValues(alpha: 0.35),
       builder: (ctx) => ResumeViewerDialog(resume: resume),
     );
   }

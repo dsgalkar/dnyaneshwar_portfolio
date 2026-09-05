@@ -10,7 +10,7 @@ class DigitalGridPainter extends CustomPainter {
   DigitalGridPainter({
     this.progress = 1.0,
     this.gridSize = 60.0,
-    this.gridColor = const Color(0x0C00F2FE),
+    this.gridColor = const Color(0x0A4F46E5),
   });
 
   @override

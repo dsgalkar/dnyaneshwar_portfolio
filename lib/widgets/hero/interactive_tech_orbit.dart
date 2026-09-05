@@ -149,31 +149,45 @@ class _InteractiveTechOrbitState extends State<InteractiveTechOrbit> with Single
                         shape: BoxShape.circle,
                         gradient: const RadialGradient(
                           colors: [
-                            AppColors.cyan,
-                            AppColors.purple,
+                            Color(0x334F46E5),
+                            Color(0x1A0EA5E9),
                             Color(0x00000000),
                           ],
                           stops: [0.0, 0.6, 1.0],
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.cyan.withValues(alpha: 0.4),
+                            color: AppColors.blue.withValues(alpha: 0.15),
                             blurRadius: 30,
-                            spreadRadius: 8,
+                            spreadRadius: 6,
                           ),
                         ],
                       ),
                       alignment: Alignment.center,
                       child: Container(
-                        width: 54,
-                        height: 54,
+                        width: 56,
+                        height: 56,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColors.surfaceElevated,
-                          border: Border.all(color: AppColors.cyan, width: 1.5),
+                          gradient: AppColors.primaryGradient,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.blue.withValues(alpha: 0.35),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
                         alignment: Alignment.center,
-                        child: const Text('DG', style: TextStyle(fontWeight: FontWeight.w900, color: AppColors.cyan, fontSize: 18)),
+                        child: const Text(
+                          'DG',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            fontSize: 18,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
                       ),
                     ),
 
@@ -212,17 +226,17 @@ class _OrbitItemBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.surfaceElevated.withValues(alpha: 0.85),
+        color: Colors.white.withValues(alpha: 0.92),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: node.color.withValues(alpha: 0.6),
+          color: node.color.withValues(alpha: 0.35),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: node.color.withValues(alpha: 0.3),
+            color: const Color(0xFF0F172A).withValues(alpha: 0.08),
             blurRadius: 12,
-            spreadRadius: 1,
+            offset: const Offset(0, 4),
           ),
         ],
       ),

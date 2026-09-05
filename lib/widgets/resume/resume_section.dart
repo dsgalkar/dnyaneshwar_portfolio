@@ -38,7 +38,7 @@ class ResumeSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.folder_shared_outlined, color: AppColors.cyan, size: 24),
+                  const Icon(Icons.folder_shared_outlined, color: AppColors.primaryIndigo, size: 24),
                   const SizedBox(width: 12),
                   Text(
                     'Tailored Resume Dossiers (${resumes.length} Formats Available)',
@@ -48,7 +48,7 @@ class ResumeSection extends StatelessWidget {
               ),
               if (isAdmin && onAddResume != null)
                 IconButton(
-                  icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.cyan),
+                  icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.primaryIndigo),
                   tooltip: 'Add Resume Variant',
                   onPressed: onAddResume,
                 ),

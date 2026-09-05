@@ -38,18 +38,18 @@ class DesktopGlassNavBar extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceElevated.withValues(alpha: 0.70),
+                  color: Colors.white.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: isAdmin ? AppColors.cyan.withValues(alpha: 0.6) : AppColors.surfaceGlassBorder,
+                    color: isAdmin ? AppColors.blue.withValues(alpha: 0.6) : AppColors.surfaceGlassBorder,
                     width: 1.2,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.4),
-                      blurRadius: 25,
+                      color: const Color(0xFF0F172A).withValues(alpha: 0.08),
+                      blurRadius: 24,
                       offset: const Offset(0, 8),
                     ),
                   ],
@@ -72,7 +72,7 @@ class DesktopGlassNavBar extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.cyan.withValues(alpha: 0.4),
+                                  color: AppColors.blue.withValues(alpha: 0.3),
                                   blurRadius: 10,
                                 ),
                               ],
@@ -81,20 +81,19 @@ class DesktopGlassNavBar extends StatelessWidget {
                             child: Text(
                               'DG',
                               style: AppTypography.codeFont(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
                           const SizedBox(width: 12),
-                          ShaderMask(
-                            shaderCallback: (bounds) => const LinearGradient(
-                              colors: [Colors.white, Color(0xFF94A3B8)],
-                            ).createShader(bounds),
-                            child: Text(
-                              'Dnyaneshwar.dev',
-                              style: AppTypography.cardTitle.copyWith(fontSize: 15),
+                          Text(
+                            'Dnyaneshwar.dev',
+                            style: AppTypography.cardTitle.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimary,
                             ),
                           ),
                         ],
@@ -126,7 +125,7 @@ class DesktopGlassNavBar extends StatelessWidget {
                           height: 36,
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           variant: isAdmin ? GlowButtonVariant.outline : GlowButtonVariant.secondary,
-                          glowColor: isAdmin ? AppColors.emerald : AppColors.cyan,
+                          glowColor: isAdmin ? AppColors.emerald : AppColors.blue,
                           onPressed: onAdminLoginPressed,
                         ),
                         const SizedBox(width: 8),
@@ -136,6 +135,7 @@ class DesktopGlassNavBar extends StatelessWidget {
                           height: 36,
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                           variant: GlowButtonVariant.primary,
+                          glowColor: AppColors.blue,
                           onPressed: onResumePressed,
                         ),
                       ],
@@ -188,7 +188,7 @@ class _NavItemState extends State<_NavItem> {
                 widget.title,
                 style: AppTypography.button.copyWith(
                   fontSize: 13,
-                  color: highlighted ? AppColors.cyan : AppColors.textSecondary,
+                  color: highlighted ? AppColors.blue : AppColors.textSecondary,
                   fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),
@@ -199,12 +199,12 @@ class _NavItemState extends State<_NavItem> {
                 height: 2,
                 width: widget.isActive ? 18 : _isHovered ? 10 : 0,
                 decoration: BoxDecoration(
-                  color: AppColors.cyan,
+                  color: AppColors.blue,
                   borderRadius: BorderRadius.circular(2),
                   boxShadow: widget.isActive
                       ? [
                           BoxShadow(
-                            color: AppColors.cyan.withValues(alpha: 0.8),
+                            color: AppColors.blue.withValues(alpha: 0.5),
                             blurRadius: 6,
                           ),
                         ]

@@ -20,7 +20,7 @@ class AppTypography {
   static TextStyle heroSubHeading = GoogleFonts.outfit(
     fontSize: 28,
     fontWeight: FontWeight.w600,
-    color: AppColors.cyan,
+    color: AppColors.blue,
     letterSpacing: -0.5,
   );
 

@@ -148,7 +148,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                             child: Text(
                               'DG',
                               style: AppTypography.codeFont(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 36,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -171,7 +171,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                               Text(
                                 'COMPUTER ENGINEERING // DEVELOPER PORTFOLIO',
                                 style: AppTypography.codeFont(
-                                  color: AppColors.cyan,
+                                  color: AppColors.primaryIndigo,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -198,14 +198,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                             gradient: const LinearGradient(
                               colors: [
                                 Colors.transparent,
-                                AppColors.cyan,
-                                AppColors.purple,
+                                AppColors.primaryIndigo,
+                                AppColors.secondarySky,
                                 Colors.transparent,
                               ],
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.cyan.withValues(alpha: 0.8),
+                                color: AppColors.primaryIndigo.withValues(alpha: 0.4),
                                 blurRadius: 10,
                                 spreadRadius: 2,
                               ),
