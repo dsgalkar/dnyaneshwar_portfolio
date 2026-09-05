@@ -1,0 +1,11 @@
+{
+  "name": "Dnyaneshwar Galkar Portfolio",
+  "short_name": "DG Portfolio",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#07090E",
+  "theme_color": "#00F2FE",
+  "description": "Premium Interactive Developer Portfolio of Dnyaneshwar Galkar",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
+}
