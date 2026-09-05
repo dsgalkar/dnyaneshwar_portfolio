@@ -19,11 +19,20 @@ class MagneticWrapper extends StatefulWidget {
 class _MagneticWrapperState extends State<MagneticWrapper> {
   Offset _offset = Offset.zero;
 
-  void _onHover(PointerEvent event, Size size) {
+  void _onHover(PointerEvent event) {
+    final RenderBox? box = context.findRenderObject() as RenderBox?;
+    if (box == null || !box.hasSize) return;
+    final Size size = box.size;
+    if (size.width <= 0 || size.height <= 0 || size.width.isInfinite || size.height.isInfinite) return;
+
     final double centerX = size.width / 2;
     final double centerY = size.height / 2;
-    final double dx = (event.localPosition.dx - centerX) / centerX;
-    final double dy = (event.localPosition.dy - centerY) / centerY;
+    if (centerX == 0 || centerY == 0) return;
+
+    final double dx = ((event.localPosition.dx - centerX) / centerX).clamp(-1.0, 1.0);
+    final double dy = ((event.localPosition.dy - centerY) / centerY).clamp(-1.0, 1.0);
+
+    if (dx.isNaN || dy.isNaN) return;
 
     setState(() {
       _offset = Offset(dx * widget.maxOffset, dy * widget.maxOffset);
@@ -31,26 +40,24 @@ class _MagneticWrapperState extends State<MagneticWrapper> {
   }
 
   void _onExit() {
-    setState(() {
-      _offset = Offset.zero;
-    });
+    if (_offset != Offset.zero) {
+      setState(() {
+        _offset = Offset.zero;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return MouseRegion(
-          onHover: (event) => _onHover(event, Size(constraints.maxWidth, constraints.maxHeight)),
-          onExit: (_) => _onExit(),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: CustomCurves.magnetic,
-            transform: Matrix4.translationValues(_offset.dx, _offset.dy, 0),
-            child: widget.child,
-          ),
-        );
-      },
+    return MouseRegion(
+      onHover: _onHover,
+      onExit: (_) => _onExit(),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        curve: CustomCurves.magnetic,
+        transform: Matrix4.translationValues(_offset.dx, _offset.dy, 0),
+        child: widget.child,
+      ),
     );
   }
 }
