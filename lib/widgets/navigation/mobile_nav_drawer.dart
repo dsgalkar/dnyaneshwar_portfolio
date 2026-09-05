@@ -58,7 +58,7 @@ class MobileNavDrawer extends StatelessWidget {
                           child: Text(
                             'DG',
                             style: AppTypography.codeFont(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w800,
                             ),
@@ -177,18 +177,10 @@ class MobileNavDrawer extends StatelessWidget {
       case 2:
         return Icons.code_rounded;
       case 3:
-        return Icons.terminal_rounded;
+        return Icons.rocket_launch_outlined;
       case 4:
         return Icons.timeline_rounded;
       case 5:
-        return Icons.groups_outlined;
-      case 6:
-        return Icons.military_tech_outlined;
-      case 7:
-        return Icons.terminal_sharp;
-      case 8:
-        return Icons.description_outlined;
-      case 9:
         return Icons.mail_outline_rounded;
       default:
         return Icons.circle_outlined;

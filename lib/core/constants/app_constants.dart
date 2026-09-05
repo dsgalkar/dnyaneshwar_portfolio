@@ -29,12 +29,8 @@ class AppConstants {
     'Home',
     'About',
     'Skills',
-    'Projects',
+    'Project',
     'Experience',
-    'VAMINT',
-    'Achievements',
-    'Terminal',
-    'Resume',
     'Contact',
   ];
 }

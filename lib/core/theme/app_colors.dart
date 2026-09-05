@@ -53,11 +53,11 @@ class AppColors {
   static const Color textMuted = Color(0xFF94A3B8); // Light Slate
   static const Color textHighlight = Color(0xFF4F46E5); // Vibrant Indigo
 
-  // Terminal Window Colors
-  static const Color terminalBg = Color(0xFF1E293B);
-  static const Color terminalGreen = Color(0xFF10B981);
-  static const Color terminalCyan = Color(0xFF38BDF8);
-  static const Color terminalYellow = Color(0xFFFBBF24);
+  // Terminal / Code Block Colors (Pleasant Light Aesthetic)
+  static const Color terminalBg = Color(0xFFF8FAFC);
+  static const Color terminalGreen = Color(0xFF059669);
+  static const Color terminalCyan = Color(0xFF0284C7);
+  static const Color terminalYellow = Color(0xFFD97706);
 
   // Aesthetic Gradients
   static const LinearGradient primaryGradient = LinearGradient(

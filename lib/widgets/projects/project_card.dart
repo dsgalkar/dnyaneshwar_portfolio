@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
+import '../../core/utils/responsive.dart';
+import '../../core/utils/url_helper.dart';
 import '../../models/project_model.dart';
-import '../common/glass_container.dart';
 import '../common/glow_button.dart';
 import '../common/tech_badge.dart';
-import '../common/tilt_card.dart';
 import 'project_detail_dialog.dart';
 
-/// Project Card with 3D tilt, gradient accent border, and case-study dialog launcher
-class ProjectCard extends StatelessWidget {
+/// Flagship Project Showcase Card designed for the demo highlight
+class ProjectCard extends StatefulWidget {
   final ProjectModel project;
 
   const ProjectCard({
@@ -18,106 +18,359 @@ class ProjectCard extends StatelessWidget {
   });
 
   @override
+  State<ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<ProjectCard> {
+  bool _isHovered = false;
+
+  void _openDetails(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierColor: const Color(0xFF0F172A).withValues(alpha: 0.35),
+      builder: (context) => ProjectDetailDialog(project: widget.project),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return TiltCard(
-      glowColor: AppColors.primaryIndigo,
+    final bool isDesktop = Responsive.isDesktop(context);
+    final project = widget.project;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: _isHovered ? AppColors.primaryIndigo.withValues(alpha: 0.4) : AppColors.surfaceGlassBorder,
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: _isHovered
+                  ? AppColors.primaryIndigo.withValues(alpha: 0.12)
+                  : const Color(0xFF0F172A).withValues(alpha: 0.05),
+              blurRadius: _isHovered ? 28 : 16,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(isDesktop ? 36 : 24),
+        child: isDesktop
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 6,
+                    child: _buildProjectInfo(context, project),
+                  ),
+                  const SizedBox(width: 36),
+                  Expanded(
+                    flex: 5,
+                    child: _buildTelemetryPreview(context, project),
+                  ),
+                ],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTelemetryPreview(context, project),
+                  const SizedBox(height: 24),
+                  _buildProjectInfo(context, project),
+                ],
+              ),
+      ),
+    );
+  }
+
+  Widget _buildProjectInfo(BuildContext context, ProjectModel project) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Top Category & Featured Pill Row
+        Wrap(
+          spacing: 10,
+          runSpacing: 8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              decoration: BoxDecoration(
+                color: AppColors.primaryIndigo.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('🛡️', style: TextStyle(fontSize: 12)),
+                  const SizedBox(width: 6),
+                  Text(
+                    project.category.toUpperCase(),
+                    style: AppTypography.codeFont(
+                      color: AppColors.primaryIndigo,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                'FLAGSHIP DEMO BUILD',
+                style: AppTypography.codeFont(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 18),
+
+        // Project Title
+        Text(
+          project.title,
+          style: AppTypography.cardTitle.copyWith(fontSize: 28),
+        ),
+
+        const SizedBox(height: 10),
+
+        // Tagline & Narrative
+        Text(
+          project.tagline,
+          style: AppTypography.bodyLarge.copyWith(
+            color: AppColors.textSecondary,
+            height: 1.5,
+          ),
+        ),
+
+        const SizedBox(height: 18),
+
+        // Key Bullet Highlights
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHighlightItem('Real-time ARP spoofing & MITM attack detection engine'),
+            _buildHighlightItem('On-device port scanner & network risk assessment'),
+            _buildHighlightItem('Isolated background processing with zero battery drain'),
+          ],
+        ),
+
+        const SizedBox(height: 22),
+
+        // Tech Badges
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: project.technologies.map((t) {
+            return TechBadge(label: t, color: AppColors.primaryIndigo);
+          }).toList(),
+        ),
+
+        const SizedBox(height: 28),
+
+        // Action Buttons
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            GlowButton(
+              text: 'View Full Case Study',
+              icon: Icons.auto_awesome_rounded,
+              variant: GlowButtonVariant.primary,
+              height: 44,
+              onPressed: () => _openDetails(context),
+            ),
+            if (project.githubUrl != null)
+              GlowButton(
+                text: 'GitHub Repository',
+                icon: Icons.code_rounded,
+                variant: GlowButtonVariant.secondary,
+                height: 44,
+                onPressed: () => UrlHelper.launchURL(project.githubUrl!),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHighlightItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 4, right: 10),
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: AppColors.mintGreen,
+              shape: BoxShape.circle,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTypography.bodySmall.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTelemetryPreview(BuildContext context, ProjectModel project) {
+    return GestureDetector(
       onTap: () => _openDetails(context),
-      child: GlassContainer(
-        padding: const EdgeInsets.all(24),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.slate50,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.slate200, width: 1.2),
+        ),
+        padding: const EdgeInsets.all(22),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // Header Bar
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Top Header Row
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryIndigo.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: AppColors.mintGreen,
+                        shape: BoxShape.circle,
                       ),
-                      alignment: Alignment.center,
-                      child: Text(project.iconSymbol, style: const TextStyle(fontSize: 24)),
                     ),
-                    if (project.isFeatured)
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          gradient: AppColors.primaryGradient,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          'FEATURED',
-                          style: AppTypography.codeFont(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'ACTIVE DEFENSE ENGINE',
+                      style: AppTypography.codeFont(
+                        color: AppColors.mintGreen,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
                       ),
+                    ),
                   ],
                 ),
-
-                const SizedBox(height: 18),
-
-                // Title
-                Text(
-                  project.title,
-                  style: AppTypography.cardTitle.copyWith(fontSize: 20),
-                ),
-
-                const SizedBox(height: 6),
-
-                // Category Tag
-                Text(
-                  project.category,
-                  style: AppTypography.codeFont(
-                    color: AppColors.primaryIndigo,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.slate200),
                   ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // Short Description
-                Text(
-                  project.tagline,
-                  style: AppTypography.bodyMedium,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-
-                const SizedBox(height: 18),
-
-                // Tech Badges
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: project.technologies.take(4).map((tech) {
-                    return TechBadge(label: tech, color: AppColors.primaryIndigo);
-                  }).toList(),
+                  child: Text(
+                    'LIVE TELEMETRY',
+                    style: AppTypography.codeFont(
+                      color: AppColors.textMuted,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
-            // Action Button
-            GlowButton(
-              text: 'View Case Study',
-              icon: Icons.auto_awesome_outlined,
-              height: 40,
-              width: double.infinity,
-              variant: GlowButtonVariant.outline,
-              onPressed: () => _openDetails(context),
+            // Diagnostic Tiles
+            Row(
+              children: [
+                Expanded(
+                  child: _buildMetricTile(
+                    title: 'System Status',
+                    value: 'Protected',
+                    valueColor: AppColors.mintGreen,
+                    icon: Icons.verified_user_rounded,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildMetricTile(
+                    title: 'Threats',
+                    value: '0 Detected',
+                    valueColor: AppColors.primaryIndigo,
+                    icon: Icons.shield_rounded,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _buildMetricTile(
+                    title: 'Packets Scanned',
+                    value: '48,290 /s',
+                    valueColor: AppColors.secondarySky,
+                    icon: Icons.graphic_eq_rounded,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildMetricTile(
+                    title: 'Network Interface',
+                    value: 'wlan0 • 24ms',
+                    valueColor: AppColors.textPrimary,
+                    icon: Icons.wifi_rounded,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 18),
+
+            // Deep Dive Prompt Banner
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.15)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Click to inspect full architecture',
+                    style: AppTypography.codeFont(
+                      color: AppColors.primaryIndigo,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 16,
+                    color: AppColors.primaryIndigo,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -125,11 +378,46 @@ class ProjectCard extends StatelessWidget {
     );
   }
 
-  void _openDetails(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withValues(alpha: 0.35),
-      builder: (context) => ProjectDetailDialog(project: project),
+  Widget _buildMetricTile({
+    required String title,
+    required String value,
+    required Color valueColor,
+    required IconData icon,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.slate200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 14, color: AppColors.textMuted),
+              const SizedBox(width: 6),
+              Text(
+                title,
+                style: AppTypography.codeFont(
+                  color: AppColors.textSecondary,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: AppTypography.cardTitle.copyWith(
+              fontSize: 14,
+              color: valueColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
