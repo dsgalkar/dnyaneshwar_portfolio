@@ -24,6 +24,7 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
     if (widget.experiences.isEmpty) return const SizedBox.shrink();
     final exp = widget.experiences.first;
     final bool isDesktop = Responsive.isDesktop(context);
+    final bool isMobile = Responsive.isMobile(context);
 
     return RevealAnimation(
       delay: const Duration(milliseconds: 150),
@@ -32,7 +33,7 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
         onExit: (_) => setState(() => _isHovered = false),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          padding: EdgeInsets.all(isDesktop ? 36 : 24),
+          padding: EdgeInsets.all(isDesktop ? 36 : (isMobile ? 20 : 28)),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
@@ -53,26 +54,25 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Row: Organization, Role, and Badges
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
+              // Header: Organization, Role, and Badges
+              if (isMobile)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
                         Container(
-                          width: 52,
-                          height: 52,
+                          width: 46,
+                          height: 46,
                           decoration: BoxDecoration(
                             color: AppColors.secondarySky.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(14),
                             border: Border.all(color: AppColors.secondarySky.withValues(alpha: 0.2)),
                           ),
                           alignment: Alignment.center,
-                          child: Text(exp.icon, style: const TextStyle(fontSize: 26)),
+                          child: Text(exp.icon, style: const TextStyle(fontSize: 22)),
                         ),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 14),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,11 +80,11 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
                               Text(
                                 exp.title,
                                 style: AppTypography.cardTitle.copyWith(
-                                  fontSize: isDesktop ? 22 : 18,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 2),
                               Text(
                                 exp.organization,
                                 style: AppTypography.bodyMedium.copyWith(
@@ -97,49 +97,74 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
                         ),
                       ],
                     ),
-                  ),
-
-                  // Period & Role Pill
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 6,
-                    alignment: WrapAlignment.end,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryIndigo.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.15)),
-                        ),
-                        child: Text(
-                          exp.period,
-                          style: AppTypography.codeFont(
-                            color: AppColors.primaryIndigo,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      children: [
+                        _buildPeriodBadge(exp.period),
+                        _buildRoleBadge(exp.roleType),
+                      ],
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 52,
+                            height: 52,
+                            decoration: BoxDecoration(
+                              color: AppColors.secondarySky.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: AppColors.secondarySky.withValues(alpha: 0.2)),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(exp.icon, style: const TextStyle(fontSize: 26)),
                           ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: AppColors.rosePink.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          exp.roleType.toUpperCase(),
-                          style: AppTypography.codeFont(
-                            color: AppColors.rosePink,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  exp.title,
+                                  style: AppTypography.cardTitle.copyWith(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  exp.organization,
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: AppColors.primaryIndigo,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    const SizedBox(width: 16),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
+                      alignment: WrapAlignment.end,
+                      children: [
+                        _buildPeriodBadge(exp.period),
+                        _buildRoleBadge(exp.roleType),
+                      ],
+                    ),
+                  ],
+                ),
 
               const SizedBox(height: 20),
 
@@ -173,7 +198,7 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(top: 4, right: 12),
+                        margin: const EdgeInsets.only(top: 6, right: 12),
                         width: 7,
                         height: 7,
                         decoration: const BoxDecoration(
@@ -197,22 +222,27 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
 
               const SizedBox(height: 20),
 
-              // Impact Metrics Strip
+              // Impact Metrics Strip (Fully Responsive & Overflow-Safe)
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                 decoration: BoxDecoration(
                   color: AppColors.slate50,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.slate200),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatCol('600+', 'Symposium Users', AppColors.primaryIndigo),
-                    Container(height: 28, width: 1, color: AppColors.slate200),
-                    _buildStatCol('5+', 'Technical Workshops', AppColors.secondarySky),
-                    Container(height: 28, width: 1, color: AppColors.slate200),
-                    _buildStatCol('40+', 'Developers Mentored', AppColors.mintGreen),
+                    Expanded(
+                      child: _buildStatCol('600+', 'Symposium Users', AppColors.primaryIndigo),
+                    ),
+                    Container(height: 32, width: 1, color: AppColors.slate200),
+                    Expanded(
+                      child: _buildStatCol('5+', 'Technical Workshops', AppColors.secondarySky),
+                    ),
+                    Container(height: 32, width: 1, color: AppColors.slate200),
+                    Expanded(
+                      child: _buildStatCol('40+', 'Developers Mentored', AppColors.mintGreen),
+                    ),
                   ],
                 ),
               ),
@@ -234,8 +264,46 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
     );
   }
 
+  Widget _buildPeriodBadge(String period) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.primaryIndigo.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.15)),
+      ),
+      child: Text(
+        period,
+        style: AppTypography.codeFont(
+          color: AppColors.primaryIndigo,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoleBadge(String roleType) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.rosePink.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        roleType.toUpperCase(),
+        style: AppTypography.codeFont(
+          color: AppColors.rosePink,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+
   Widget _buildStatCol(String value, String label, Color color) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           value,
@@ -248,9 +316,12 @@ class _ExperienceTimelineState extends State<ExperienceTimeline> {
         const SizedBox(height: 2),
         Text(
           label,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: AppTypography.codeFont(
             color: AppColors.textSecondary,
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: FontWeight.w600,
           ),
         ),

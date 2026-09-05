@@ -85,8 +85,16 @@ class SocialLinksRow extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(item.title, style: AppTypography.cardTitle.copyWith(fontSize: 16)),
-                        Text(item.handle, style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12)),
+                        Text(
+                          item.title,
+                          style: AppTypography.cardTitle.copyWith(fontSize: 16),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          item.handle,
+                          style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     ),
                   ),

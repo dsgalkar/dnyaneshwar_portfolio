@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
+import '../../core/utils/url_helper.dart';
 import '../../state/portfolio_state_manager.dart';
 import '../common/glass_container.dart';
 import '../common/glow_button.dart';
@@ -28,7 +29,7 @@ class _AdminDashboardModalState extends State<AdminDashboardModal> with SingleTi
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 6, vsync: this);
+    _tabController = TabController(length: 7, vsync: this);
   }
 
   @override
@@ -123,6 +124,7 @@ class _AdminDashboardModalState extends State<AdminDashboardModal> with SingleTi
                         labelColor: AppColors.cyan,
                         unselectedLabelColor: AppColors.textSecondary,
                         tabs: [
+                          Tab(text: '📬 Inquiries (${widget.stateManager.messages.length})'),
                           Tab(text: '🚀 Projects (${widget.stateManager.projects.length})'),
                           Tab(text: '📜 Certifications (${widget.stateManager.achievements.length})'),
                           Tab(text: '💼 Timeline (${widget.stateManager.experiences.length})'),
@@ -139,6 +141,7 @@ class _AdminDashboardModalState extends State<AdminDashboardModal> with SingleTi
                         child: TabBarView(
                           controller: _tabController,
                           children: [
+                            _buildInquiriesTab(context),
                             _buildProjectsTab(context),
                             _buildAchievementsTab(context),
                             _buildExperiencesTab(context),
@@ -157,6 +160,235 @@ class _AdminDashboardModalState extends State<AdminDashboardModal> with SingleTi
         ),
       ),
     );
+  }
+
+  // --- INQUIRIES / CONTACT MESSAGES TAB ---
+  Widget _buildInquiriesTab(BuildContext context) {
+    final messages = widget.stateManager.messages;
+    final unreadCount = widget.stateManager.unreadMessagesCount;
+
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Bar
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text('Direct Contact Messages', style: AppTypography.cardTitle.copyWith(fontSize: 16)),
+                  const SizedBox(width: 10),
+                  if (unreadCount > 0)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryIndigo.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.4)),
+                      ),
+                      child: Text(
+                        '$unreadCount NEW',
+                        style: AppTypography.codeFont(
+                          color: AppColors.primaryIndigo,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              if (messages.isNotEmpty)
+                TextButton.icon(
+                  icon: const Icon(Icons.delete_sweep_outlined, size: 18, color: AppColors.error),
+                  label: const Text('Clear All', style: TextStyle(color: AppColors.error, fontSize: 13)),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        backgroundColor: AppColors.surfaceElevated,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        title: const Text('Clear All Messages?', style: TextStyle(color: AppColors.textPrimary)),
+                        content: const Text('Are you sure you want to clear all direct contact messages from your inbox?'),
+                        actions: [
+                          TextButton(
+                            child: const Text('Cancel', style: TextStyle(color: AppColors.textSecondary)),
+                            onPressed: () => Navigator.pop(ctx),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+                            child: const Text('Clear All', style: TextStyle(color: Colors.white)),
+                            onPressed: () {
+                              widget.stateManager.clearAllMessages();
+                              Navigator.pop(ctx);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+            ],
+          ),
+          const SizedBox(height: 16),
+
+          // Content List or Empty State
+          Expanded(
+            child: messages.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryIndigo.withValues(alpha: 0.08),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.mail_outline_rounded, size: 48, color: AppColors.primaryIndigo),
+                        ),
+                        const SizedBox(height: 16),
+                        Text('No Messages Yet', style: AppTypography.cardTitle.copyWith(fontSize: 18)),
+                        const SizedBox(height: 8),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 380),
+                          child: Text(
+                            'When visitors or recruiters submit inquiries on the portfolio contact form, they will instantly appear here with full details.',
+                            textAlign: TextAlign.center,
+                            style: AppTypography.bodySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      final msg = messages[index];
+                      return GlassContainer(
+                        padding: const EdgeInsets.all(18),
+                        margin: const EdgeInsets.only(bottom: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Sender Avatar Circle
+                                Container(
+                                  width: 42,
+                                  height: 42,
+                                  decoration: BoxDecoration(
+                                    gradient: AppColors.primaryGradient,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    msg.senderName.isNotEmpty ? msg.senderName[0].toUpperCase() : '?',
+                                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                                  ),
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Wrap(
+                                        spacing: 8,
+                                        runSpacing: 4,
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        children: [
+                                          Text(msg.senderName, style: AppTypography.cardTitle.copyWith(fontSize: 16)),
+                                          if (!msg.isRead)
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primaryIndigo.withValues(alpha: 0.15),
+                                                borderRadius: BorderRadius.circular(4),
+                                              ),
+                                              child: const Text('NEW', style: TextStyle(color: AppColors.primaryIndigo, fontSize: 9, fontWeight: FontWeight.bold)),
+                                            ),
+                                          Text(
+                                            _formatTimeAgo(msg.timestamp),
+                                            style: AppTypography.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 2),
+                                      SelectableText(
+                                        msg.senderEmail,
+                                        style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // Action Buttons
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      tooltip: msg.isRead ? 'Mark as Unread' : 'Mark as Read',
+                                      icon: Icon(
+                                        msg.isRead ? Icons.mark_email_read_outlined : Icons.mark_email_unread_rounded,
+                                        color: msg.isRead ? AppColors.textSecondary : AppColors.primaryIndigo,
+                                        size: 20,
+                                      ),
+                                      onPressed: () => widget.stateManager.toggleMessageReadStatus(msg.id),
+                                    ),
+                                    IconButton(
+                                      tooltip: 'Reply via Email',
+                                      icon: const Icon(Icons.reply_rounded, color: AppColors.emerald, size: 20),
+                                      onPressed: () {
+                                        widget.stateManager.markMessageAsRead(msg.id);
+                                        UrlHelper.sendEmail(
+                                          msg.senderEmail,
+                                          subject: 'Re: ${msg.subject}',
+                                          body: '\n\n--- Original Message from ${msg.senderName} ---\n${msg.message}',
+                                        );
+                                      },
+                                    ),
+                                    IconButton(
+                                      tooltip: 'Delete Message',
+                                      icon: const Icon(Icons.delete_outline_rounded, color: AppColors.error, size: 20),
+                                      onPressed: () => widget.stateManager.deleteMessage(msg.id),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: AppColors.surfaceGlass,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.surfaceGlassBorder),
+                              ),
+                              child: SelectableText(
+                                msg.message,
+                                style: AppTypography.bodyMedium.copyWith(height: 1.5),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatTimeAgo(DateTime dt) {
+    final diff = DateTime.now().difference(dt);
+    if (diff.inMinutes < 1) return 'Just now';
+    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    if (diff.inDays == 1) return 'Yesterday';
+    return '${dt.day}/${dt.month}/${dt.year}';
   }
 
   // --- PROJECTS TAB ---

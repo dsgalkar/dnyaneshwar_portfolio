@@ -3,13 +3,17 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/utils/url_helper.dart';
 import '../../data/portfolio_data.dart';
+import '../../models/contact_message_model.dart';
+import '../../state/portfolio_state_manager.dart';
 import '../common/glass_container.dart';
 import '../common/glow_button.dart';
 import 'success_lottie_dialog.dart';
 
-/// Animated Futuristic Contact Form
+/// Animated Futuristic Contact Form connected to Admin Dashboard
 class ContactForm extends StatefulWidget {
-  const ContactForm({super.key});
+  final PortfolioStateManager? stateManager;
+
+  const ContactForm({super.key, this.stateManager});
 
   @override
   State<ContactForm> createState() => _ContactFormState();
@@ -32,12 +36,29 @@ class _ContactFormState extends State<ContactForm> {
       if (mounted) {
         setState(() => _isSubmitting = false);
         final String name = _nameController.text.trim();
+        final String email = _emailController.text.trim();
+        final String message = _messageController.text.trim();
+
+        // Connect directly to Admin Panel via PortfolioStateManager
+        if (widget.stateManager != null) {
+          widget.stateManager!.addMessage(
+            ContactMessageModel(
+              id: 'msg-${DateTime.now().millisecondsSinceEpoch}',
+              senderName: name.isNotEmpty ? name : 'Visitor',
+              senderEmail: email,
+              subject: 'Portfolio Inquiry from $name',
+              message: message,
+              timestamp: DateTime.now(),
+              isRead: false,
+            ),
+          );
+        }
 
         // Also prepare mailto
         UrlHelper.sendEmail(
           PortfolioData.email,
           subject: 'Portfolio Inquiry from $name',
-          body: 'Sender Email: ${_emailController.text.trim()}\n\n${_messageController.text.trim()}',
+          body: 'Sender Email: $email\n\n$message',
         );
 
         _nameController.clear();
@@ -86,10 +107,10 @@ class _ContactFormState extends State<ContactForm> {
             // Name Field
             TextFormField(
               controller: _nameController,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: AppColors.textPrimary),
               decoration: const InputDecoration(
                 labelText: 'Your Name',
-                prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.cyan, size: 20),
+                prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.primaryIndigo, size: 20),
                 hintText: 'Alex Rivera',
               ),
               validator: (v) => (v == null || v.trim().isEmpty) ? 'Please enter your name' : null,
@@ -101,10 +122,10 @@ class _ContactFormState extends State<ContactForm> {
             TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: AppColors.textPrimary),
               decoration: const InputDecoration(
                 labelText: 'Email Address',
-                prefixIcon: Icon(Icons.email_outlined, color: AppColors.cyan, size: 20),
+                prefixIcon: Icon(Icons.email_outlined, color: AppColors.primaryIndigo, size: 20),
                 hintText: 'alex@example.com',
               ),
               validator: (v) {
@@ -120,12 +141,12 @@ class _ContactFormState extends State<ContactForm> {
             TextFormField(
               controller: _messageController,
               maxLines: 4,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: AppColors.textPrimary),
               decoration: const InputDecoration(
                 labelText: 'Your Message',
                 prefixIcon: Padding(
                   padding: EdgeInsets.only(bottom: 50.0),
-                  child: Icon(Icons.chat_bubble_outline_rounded, color: AppColors.cyan, size: 20),
+                  child: Icon(Icons.chat_bubble_outline_rounded, color: AppColors.primaryIndigo, size: 20),
                 ),
                 hintText: 'Hi Dnyaneshwar, I saw your portfolio and would like to discuss...',
               ),

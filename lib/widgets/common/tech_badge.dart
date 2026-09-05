@@ -47,11 +47,14 @@ class TechBadge extends StatelessWidget {
             Icon(icon, size: 12, color: badgeColor),
             const SizedBox(width: 5),
           ],
-          Text(
-            label,
-            style: AppTypography.badge.copyWith(
-              color: badgeColor,
-              fontSize: 12,
+          Flexible(
+            child: Text(
+              label,
+              style: AppTypography.badge.copyWith(
+                color: badgeColor,
+                fontSize: 12,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

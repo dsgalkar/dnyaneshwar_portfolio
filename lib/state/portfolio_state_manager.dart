@@ -7,6 +7,7 @@ import '../models/achievement_model.dart';
 import '../models/activity_model.dart';
 import '../models/resume_model.dart';
 import '../models/stat_model.dart';
+import '../models/contact_message_model.dart';
 
 /// Central Reactive State Manager providing live CRUD updates across the entire portfolio
 class PortfolioStateManager extends ChangeNotifier {
@@ -17,6 +18,7 @@ class PortfolioStateManager extends ChangeNotifier {
   late List<ActivityModel> _vamintActivities;
   late List<ResumeModel> _resumes;
   late List<StatModel> _stats;
+  late List<ContactMessageModel> _messages;
   late String _bio1;
   late String _bio2;
   late String _tagline;
@@ -84,6 +86,28 @@ class PortfolioStateManager extends ChangeNotifier {
         ],
       ),
     ];
+
+    // Seed Contact Inquiries
+    _messages = [
+      ContactMessageModel(
+        id: 'msg-1',
+        senderName: 'Sarah Jenkins',
+        senderEmail: 'sarah.j@techcorp.io',
+        subject: 'Mobile Systems Engineering Lead Opportunity',
+        message: 'Hi Dnyaneshwar, your Flutter work on CyberShield Guard caught our eye. We would love to chat regarding our upcoming engineering program.',
+        timestamp: DateTime.now().subtract(const Duration(hours: 3)),
+        isRead: false,
+      ),
+      ContactMessageModel(
+        id: 'msg-2',
+        senderName: 'Rohan Sharma',
+        senderEmail: 'rohan.dev@startuphub.in',
+        subject: 'Hackathon Collaboration / VAMINT',
+        message: 'Hey Dnyaneshwar! Loved your talk at VAMINT. Are you open to collaborating on an upcoming security challenge project?',
+        timestamp: DateTime.now().subtract(const Duration(days: 1)),
+        isRead: true,
+      ),
+    ];
   }
 
   // Getters
@@ -94,6 +118,8 @@ class PortfolioStateManager extends ChangeNotifier {
   List<ActivityModel> get vamintActivities => List.unmodifiable(_vamintActivities);
   List<ResumeModel> get resumes => List.unmodifiable(_resumes);
   List<StatModel> get stats => List.unmodifiable(_stats);
+  List<ContactMessageModel> get messages => List.unmodifiable(_messages);
+  int get unreadMessagesCount => _messages.where((m) => !m.isRead).length;
   String get bio1 => _bio1;
   String get bio2 => _bio2;
   String get tagline => _tagline;
@@ -199,6 +225,38 @@ class PortfolioStateManager extends ChangeNotifier {
     if (bio1 != null) _bio1 = bio1;
     if (bio2 != null) _bio2 = bio2;
     if (tagline != null) _tagline = tagline;
+    notifyListeners();
+  }
+
+  // --- CONTACT MESSAGES / INQUIRIES CRUD ---
+  void addMessage(ContactMessageModel message) {
+    _messages.insert(0, message);
+    notifyListeners();
+  }
+
+  void markMessageAsRead(String id) {
+    final int index = _messages.indexWhere((m) => m.id == id);
+    if (index != -1) {
+      _messages[index] = _messages[index].copyWith(isRead: true);
+      notifyListeners();
+    }
+  }
+
+  void toggleMessageReadStatus(String id) {
+    final int index = _messages.indexWhere((m) => m.id == id);
+    if (index != -1) {
+      _messages[index] = _messages[index].copyWith(isRead: !_messages[index].isRead);
+      notifyListeners();
+    }
+  }
+
+  void deleteMessage(String id) {
+    _messages.removeWhere((m) => m.id == id);
+    notifyListeners();
+  }
+
+  void clearAllMessages() {
+    _messages.clear();
     notifyListeners();
   }
 }

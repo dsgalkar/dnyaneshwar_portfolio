@@ -100,19 +100,24 @@ class DesktopGlassNavBar extends StatelessWidget {
                       ),
                     ),
 
-                    // Nav Items
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(AppConstants.navItems.length, (index) {
-                        final String title = AppConstants.navItems[index];
-                        final bool isActive = activeIndex == index;
+                    // Nav Items (Overflow Protected)
+                    Flexible(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(AppConstants.navItems.length, (index) {
+                            final String title = AppConstants.navItems[index];
+                            final bool isActive = activeIndex == index;
 
-                        return _NavItem(
-                          title: title,
-                          isActive: isActive,
-                          onTap: () => onTabSelected(index),
-                        );
-                      }),
+                            return _NavItem(
+                              title: title,
+                              isActive: isActive,
+                              onTap: () => onTabSelected(index),
+                            );
+                          }),
+                        ),
+                      ),
                     ),
 
                     // Actions (Admin Button + Resume CTA)

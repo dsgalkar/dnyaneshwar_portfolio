@@ -34,7 +34,9 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDesktop = Responsive.isDesktop(context);
+    final double screenW = MediaQuery.of(context).size.width;
+    final bool useWideSplit = screenW >= 1020;
+    final bool isMobile = Responsive.isMobile(context);
     final project = widget.project;
 
     return MouseRegion(
@@ -59,8 +61,8 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ],
         ),
-        padding: EdgeInsets.all(isDesktop ? 36 : 24),
-        child: isDesktop
+        padding: EdgeInsets.all(useWideSplit ? 36 : (isMobile ? 20 : 28)),
+        child: useWideSplit
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -68,7 +70,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     flex: 6,
                     child: _buildProjectInfo(context, project),
                   ),
-                  const SizedBox(width: 36),
+                  const SizedBox(width: 32),
                   Expanded(
                     flex: 5,
                     child: _buildTelemetryPreview(context, project),
@@ -79,7 +81,7 @@ class _ProjectCardState extends State<ProjectCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildTelemetryPreview(context, project),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 28),
                   _buildProjectInfo(context, project),
                 ],
               ),
@@ -143,7 +145,7 @@ class _ProjectCardState extends State<ProjectCard> {
         // Project Title
         Text(
           project.title,
-          style: AppTypography.cardTitle.copyWith(fontSize: 28),
+          style: AppTypography.cardTitle.copyWith(fontSize: 26),
         ),
 
         const SizedBox(height: 10),
@@ -215,7 +217,7 @@ class _ProjectCardState extends State<ProjectCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 4, right: 10),
+            margin: const EdgeInsets.only(top: 6, right: 10),
             width: 6,
             height: 6,
             decoration: const BoxDecoration(
@@ -246,7 +248,7 @@ class _ProjectCardState extends State<ProjectCard> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppColors.slate200, width: 1.2),
         ),
-        padding: const EdgeInsets.all(22),
+        padding: const EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -255,6 +257,7 @@ class _ProjectCardState extends State<ProjectCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
                       width: 10,
@@ -266,7 +269,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'ACTIVE DEFENSE ENGINE',
+                      'ACTIVE DEFENSE',
                       style: AppTypography.codeFont(
                         color: AppColors.mintGreen,
                         fontSize: 11,
@@ -294,7 +297,7 @@ class _ProjectCardState extends State<ProjectCard> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
             // Diagnostic Tiles
             Row(
@@ -307,7 +310,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     icon: Icons.verified_user_rounded,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 10),
                 Expanded(
                   child: _buildMetricTile(
                     title: 'Threats',
@@ -319,22 +322,22 @@ class _ProjectCardState extends State<ProjectCard> {
               ],
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
 
             Row(
               children: [
                 Expanded(
                   child: _buildMetricTile(
-                    title: 'Packets Scanned',
+                    title: 'Packets',
                     value: '48,290 /s',
                     valueColor: AppColors.secondarySky,
                     icon: Icons.graphic_eq_rounded,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 10),
                 Expanded(
                   child: _buildMetricTile(
-                    title: 'Network Interface',
+                    title: 'Interface',
                     value: 'wlan0 • 24ms',
                     valueColor: AppColors.textPrimary,
                     icon: Icons.wifi_rounded,
@@ -343,7 +346,7 @@ class _ProjectCardState extends State<ProjectCard> {
               ],
             ),
 
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
 
             // Deep Dive Prompt Banner
             Container(
@@ -354,16 +357,19 @@ class _ProjectCardState extends State<ProjectCard> {
                 border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.15)),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Click to inspect full architecture',
-                    style: AppTypography.codeFont(
-                      color: AppColors.primaryIndigo,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    child: Text(
+                      'Tap to inspect architecture & case study',
+                      style: AppTypography.codeFont(
+                        color: AppColors.primaryIndigo,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const SizedBox(width: 8),
                   const Icon(
                     Icons.arrow_forward_rounded,
                     size: 16,
@@ -385,7 +391,7 @@ class _ProjectCardState extends State<ProjectCard> {
     required IconData icon,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -393,28 +399,33 @@ class _ProjectCardState extends State<ProjectCard> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
-              Icon(icon, size: 14, color: AppColors.textMuted),
-              const SizedBox(width: 6),
-              Text(
-                title,
-                style: AppTypography.codeFont(
-                  color: AppColors.textSecondary,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
+              Icon(icon, size: 13, color: AppColors.textMuted),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  title,
+                  style: AppTypography.codeFont(
+                    color: AppColors.textSecondary,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 5),
           Text(
             value,
             style: AppTypography.cardTitle.copyWith(
-              fontSize: 14,
+              fontSize: 13,
               color: valueColor,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

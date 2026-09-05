@@ -316,19 +316,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     subtitle: 'Interested in discussing an internship, project collaboration, or technical challenge? Reach out directly.',
                                   ),
                                   isDesktop
-                                      ? const Row(
+                                      ? Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Expanded(flex: 5, child: SocialLinksRow()),
-                                            SizedBox(width: 28),
-                                            Expanded(flex: 6, child: ContactForm()),
+                                            const Expanded(flex: 5, child: SocialLinksRow()),
+                                            const SizedBox(width: 28),
+                                            Expanded(flex: 6, child: ContactForm(stateManager: _stateManager)),
                                           ],
                                         )
-                                      : const Column(
+                                      : Column(
                                           children: [
-                                            SocialLinksRow(),
-                                            SizedBox(height: 24),
-                                            ContactForm(),
+                                            const SocialLinksRow(),
+                                            const SizedBox(height: 24),
+                                            ContactForm(stateManager: _stateManager),
                                           ],
                                         ),
                                 ],
@@ -344,14 +344,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Divider(color: AppColors.slate200),
                                   const SizedBox(height: 20),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  Wrap(
+                                    alignment: WrapAlignment.spaceBetween,
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    spacing: 16,
+                                    runSpacing: 14,
                                     children: [
                                       Text(
                                         '© ${DateTime.now().year} Dnyaneshwar Galkar. Engineered with Flutter & Dart.',
                                         style: AppTypography.codeFont(color: AppColors.textSecondary, fontSize: 12),
                                       ),
                                       Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: [
                                           InkWell(
                                             onTap: _openAdminAuthOrDashboard,
@@ -359,6 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(6.0),
                                               child: Row(
+                                                mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Icon(_authState.isAdmin ? Icons.verified_user_rounded : Icons.admin_panel_settings_outlined, size: 14, color: AppColors.primaryIndigo),
                                                   const SizedBox(width: 6),
@@ -377,6 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(6.0),
                                               child: Row(
+                                                mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   const Text('✨', style: TextStyle(fontSize: 14)),
                                                   const SizedBox(width: 6),

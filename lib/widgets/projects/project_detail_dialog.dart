@@ -8,7 +8,7 @@ import '../common/glass_container.dart';
 import '../common/glow_button.dart';
 import '../common/tech_badge.dart';
 
-/// Full-Fidelity Deep-Dive Project Modal Case Study
+/// Full-Fidelity Deep-Dive Project Modal Case Study (Overflow-Safe)
 class ProjectDetailDialog extends StatelessWidget {
   final ProjectModel project;
 
@@ -21,7 +21,7 @@ class ProjectDetailDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 820, maxHeight: 850),
         child: ClipRRect(
@@ -45,33 +45,46 @@ class ProjectDetailDialog extends StatelessWidget {
                 children: [
                   // Modal Top Header
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(28, 24, 20, 16),
+                    padding: const EdgeInsets.fromLTRB(24, 20, 16, 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryIndigo.withValues(alpha: 0.08),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryIndigo.withValues(alpha: 0.08),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: AppColors.primaryIndigo.withValues(alpha: 0.2)),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(project.iconSymbol, style: const TextStyle(fontSize: 22)),
                               ),
-                              alignment: Alignment.center,
-                              child: Text(project.iconSymbol, style: const TextStyle(fontSize: 22)),
-                            ),
-                            const SizedBox(width: 14),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(project.title, style: AppTypography.cardTitle.copyWith(fontSize: 20)),
-                                Text(project.category, style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12)),
-                              ],
-                            ),
-                          ],
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      project.title,
+                                      style: AppTypography.cardTitle.copyWith(fontSize: 20),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      project.category,
+                                      style: AppTypography.codeFont(color: AppColors.primaryIndigo, fontSize: 12),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(width: 10),
                         IconButton(
                           onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.close_rounded, color: AppColors.textSecondary),
@@ -83,12 +96,12 @@ class ProjectDetailDialog extends StatelessWidget {
                     ),
                   ),
 
-                  Divider(color: AppColors.slate200, height: 1),
+                  const Divider(color: AppColors.slate200, height: 1),
 
                   // Scrollable Body Content
                   Expanded(
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(28),
+                      padding: const EdgeInsets.all(24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -112,54 +125,82 @@ class ProjectDetailDialog extends StatelessWidget {
 
                           const SizedBox(height: 28),
 
-                          // Problem & Solution Split Cards
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: GlassContainer(
-                                  padding: const EdgeInsets.all(16),
-                                  color: AppColors.amber.withValues(alpha: 0.05),
-                                  borderColor: AppColors.amber.withValues(alpha: 0.4),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.error_outline_rounded, color: AppColors.amber, size: 18),
-                                          const SizedBox(width: 8),
-                                          Text('The Problem', style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.amber)),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(project.problem, style: AppTypography.bodySmall),
-                                    ],
-                                  ),
+                          // Problem & Solution Split Cards (Responsive Layout)
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              final bool isWide = constraints.maxWidth > 500;
+
+                              final problemWidget = GlassContainer(
+                                padding: const EdgeInsets.all(16),
+                                color: AppColors.amber.withValues(alpha: 0.05),
+                                borderColor: AppColors.amber.withValues(alpha: 0.4),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.error_outline_rounded, color: AppColors.amber, size: 18),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            'The Problem',
+                                            style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.amber),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(project.problem, style: AppTypography.bodySmall),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(width: 14),
-                              Expanded(
-                                child: GlassContainer(
-                                  padding: const EdgeInsets.all(16),
-                                  color: AppColors.mintGreen.withValues(alpha: 0.05),
-                                  borderColor: AppColors.mintGreen.withValues(alpha: 0.4),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(Icons.check_circle_outline_rounded, color: AppColors.mintGreen, size: 18),
-                                          const SizedBox(width: 8),
-                                          Text('The Solution', style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.mintGreen)),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(project.solution, style: AppTypography.bodySmall),
-                                    ],
-                                  ),
+                              );
+
+                              final solutionWidget = GlassContainer(
+                                padding: const EdgeInsets.all(16),
+                                color: AppColors.mintGreen.withValues(alpha: 0.05),
+                                borderColor: AppColors.mintGreen.withValues(alpha: 0.4),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.check_circle_outline_rounded, color: AppColors.mintGreen, size: 18),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            'The Solution',
+                                            style: AppTypography.cardTitle.copyWith(fontSize: 15, color: AppColors.mintGreen),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(project.solution, style: AppTypography.bodySmall),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              );
+
+                              if (isWide) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(child: problemWidget),
+                                    const SizedBox(width: 14),
+                                    Expanded(child: solutionWidget),
+                                  ],
+                                );
+                              } else {
+                                return Column(
+                                  children: [
+                                    problemWidget,
+                                    const SizedBox(height: 14),
+                                    solutionWidget,
+                                  ],
+                                );
+                              }
+                            },
                           ),
 
                           const SizedBox(height: 28),
@@ -207,29 +248,31 @@ class ProjectDetailDialog extends StatelessWidget {
                     ),
                   ),
 
-                  // Bottom Action Buttons
+                  // Bottom Action Buttons (Responsive Wrap)
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    padding: const EdgeInsets.all(18.0),
+                    child: Wrap(
+                      spacing: 12,
+                      runSpacing: 10,
+                      alignment: WrapAlignment.end,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        if (project.githubUrl != null) ...[
+                        if (project.githubUrl != null)
                           GlowButton(
                             text: 'View GitHub Code',
                             icon: Icons.code_rounded,
                             variant: GlowButtonVariant.secondary,
+                            height: 42,
                             onPressed: () => UrlHelper.launchURL(project.githubUrl!),
                           ),
-                          const SizedBox(width: 12),
-                        ],
-                        if (project.liveDemoUrl != null) ...[
+                        if (project.liveDemoUrl != null)
                           GlowButton(
                             text: 'Live Demo',
                             icon: Icons.open_in_new_rounded,
                             variant: GlowButtonVariant.primary,
+                            height: 42,
                             onPressed: () => UrlHelper.launchURL(project.liveDemoUrl!),
                           ),
-                        ],
                       ],
                     ),
                   ),
