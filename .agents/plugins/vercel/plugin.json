@@ -1,0 +1,5 @@
+{
+  "name": "vercel",
+  "version": "0.49.0",
+  "description": "Comprehensive Vercel ecosystem plugin — relational knowledge graph, 35+ skills for every major Vercel product, specialized agents, CLI workflows, and MCP server."
+}

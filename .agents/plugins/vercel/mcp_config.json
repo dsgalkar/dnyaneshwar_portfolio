@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "vercel": {
+      "serverUrl": "https://mcp.vercel.com",
+      "url": "https://mcp.vercel.com",
+      "note": "Official Vercel MCP server. Connects to Vercel account via OAuth to search docs, list projects/deployments, and inspect logs."
+    }
+  }
+}
